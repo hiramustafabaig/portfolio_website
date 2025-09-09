@@ -6,7 +6,7 @@ export const education = [
     institution: "COMSATS University Science And Technology",
     period: "2023 - 2027",
     description: "Pursuing Data Science and developing curiosity for ML and AI. Completed several projects on OOP and web development.",
-    image: "public/images/institutes/Cui.jpg" 
+    image: "/images/institutes/Cui.jpg" 
   },
   {
     id: 2,
@@ -14,7 +14,7 @@ export const education = [
     institution: "IMCG F7/2",
     period: "2019 - 2021",
     description: "Focus on biological sciences and chemistry. Participated in sports competitions.",
-    image: "public/images/institutes/imcg.jpg" 
+    image: "/images/institutes/imcg.jpg" 
   },
   {
     id: 3,
@@ -22,6 +22,6 @@ export const education = [
     institution: "The Educators School",
     period: "2017 - 2019",
     description: "Early exposure to computer programming and mathematics. Developed interest in science and technology.",
-    image: "public/images/institutes/educators.png" 
+    image: "/images/institutes/educators.png" 
   }
 ]

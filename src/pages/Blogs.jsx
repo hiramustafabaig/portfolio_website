@@ -14,7 +14,7 @@ const Blogs = () => {
       author: "Hira Baig",
       date: "July 32, 2024",
       excerpt: "Data science has emerged as a transformative force in modern industries, revolutionizing the way businesses operate and make decisions...",
-      image: "public/images/blogs/datascience.jpg", 
+      image: "/images/blogs/datascience.jpg", 
       readTime: "5 min read",
       pdfPath: "/The Power of Data Science by Hira Baig.pdf",
       content: `
@@ -36,7 +36,7 @@ const Blogs = () => {
       author: "Hira Baig",
       date: "March 22, 2025",
       excerpt: "The rapid advancement of Artificial Intelligence (AI), Machine Learning (ML), and Data Science has necessitated a fundamental transformation in operating system (OS) architectures...",
-      image: "public/images/blogs/os.webp", 
+      image: "/images/blogs/os.webp", 
       readTime: "7 min read",
       pdfPath: "/The Evolution of Operating Systems in the Age of Artificial Intelligence by Hira Baig.pdf",
       content: `

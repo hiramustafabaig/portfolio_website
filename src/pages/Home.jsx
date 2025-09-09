@@ -239,7 +239,7 @@ const Home = () => {
                   {/* Optimized square image container */}
                   <div className="relative w-84 h-82 mx-auto overflow-hidden">
                     <img
-                      src="public/images/profile/with-bg.jpeg"
+                      src="/images/profile/with-bg.jpeg"
                       alt="Hira Baig"
                       className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105"
                       style={{objectPosition: 'center top'}}

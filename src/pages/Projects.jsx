@@ -14,7 +14,7 @@ const Projects = () => {
       technologies: ["Python", "Machine Learning", "AI", "Flask", "Pandas", "Scikit-learn"],
       category: "AI & Healthcare",
       status: "Completed",
-      image: "public/images/projects/HealthRiskAI.jpg"
+      image: "/images/projects/HealthRiskAI.jpg"
     },
     {
       id: 2,
@@ -23,7 +23,7 @@ const Projects = () => {
       technologies: ["Java", "OOP", "Encryption", "MySQL", "Swing GUI"],
       category: "Secure System",
       status: "Completed",
-      image: "public/images/projects/VotingManagementSystem.webp"
+      image: "/images/projects/VotingManagementSystem.webp"
     },
     {
       id: 3,
@@ -32,7 +32,7 @@ const Projects = () => {
       technologies: ["C++", "Data Structures", "File Handling", "OOP"],
       category: "Management System",
       status: "Completed",
-      image: "public/images/projects/HostelManagementSystem.jpeg"
+      image: "/images/projects/HostelManagementSystem.jpeg"
     },
     {
       id: 4,
@@ -41,7 +41,7 @@ const Projects = () => {
       technologies: ["React", "Node.js", "AI", "MongoDB", "Express" , "SQL"],
       category: "Career Development",
       status: "Ongoing",
-      image: "public/images/projects/CareerAI.png"
+      image: "/images/projects/CareerAI.png"
     },
     {
       id: 5,
@@ -50,7 +50,7 @@ const Projects = () => {
       technologies: ["Power BI", "Data Visualization", "DAX", "Data Modeling", "SQL"],
       category: "Data Analytics",
       status: "Completed",
-      image: "public/images/projects/EcommerceDashboardPowerBI.png"
+      image: "/images/projects/EcommerceDashboardPowerBI.png"
     }
   ]
 
