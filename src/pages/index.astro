@@ -23,7 +23,7 @@ const marqueeSkills = [...allSkills, ...allSkills];
     <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-bg via-transparent to-transparent"></div>
 
     <div class="relative z-10 mx-auto grid min-h-[calc(100vh-6rem)] max-w-6xl grid-cols-1 items-center gap-10 px-6 py-16 lg:grid-cols-[1.05fr_0.95fr]">
-      <!-- Left: typography (in front of the 3D scene) -->
+      <!-- Typography, in front of the 3D scene -->
       <div class="text-center lg:text-left">
         <p class="reveal font-mono text-sm uppercase tracking-[0.3em] text-accent-soft">
           Data Science &middot; AI &middot; Research
@@ -39,7 +39,7 @@ const marqueeSkills = [...allSkills, ...allSkills];
         <div class="reveal mt-10 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
           <a
             href="#work"
-            class="rounded-full bg-accent px-7 py-3 font-medium text-text shadow-lg shadow-accent/30 transition-all hover:-translate-y-0.5 hover:bg-accent-soft hover:text-void"
+            class="rounded-full bg-accent px-7 py-3 font-medium text-void shadow-lg shadow-accent/30 transition-all hover:-translate-y-0.5 hover:bg-accent-soft"
           >
             View My Work
           </a>
@@ -57,272 +57,292 @@ const marqueeSkills = [...allSkills, ...allSkills];
         </div>
       </div>
 
-      <!-- Right: portrait, layered in front of the 3D scene -->
-      <div class="reveal relative mx-auto w-fit lg:mx-0 lg:ml-auto">
-        <div class="absolute -inset-3 rounded-[2.5rem] bg-gradient-to-br from-accent/40 via-accent-2/30 to-transparent blur-2xl"></div>
-        <div class="glass relative flex h-72 w-64 flex-col items-center justify-center overflow-hidden rounded-[2rem] sm:h-80 sm:w-72">
-          <!--
-            Swap this placeholder for the real photo:
-            <img src="/images/profile/hira.jpg" alt="Hira Baig" class="h-full w-full object-cover" />
-          -->
-          <svg class="h-16 w-16 text-mist/50" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
-          </svg>
-          <p class="mt-3 font-mono text-[10px] uppercase tracking-widest text-text-dim">Photo coming soon</p>
-        </div>
-        <span class="glass absolute -bottom-4 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-4 py-1.5 font-mono text-xs text-accent-soft">
-          BS Data Science &middot; '27
-        </span>
-      </div>
+      <!-- Right column intentionally empty on desktop — the 3D sphere (with the
+           portrait rendered inside it) occupies this space as part of HeroCanvas. -->
     </div>
   </section>
 
-  <!-- Skills marquee -->
-  <div class="relative overflow-hidden border-y border-border py-4">
+  <!-- Skills marquee band -->
+  <div class="relative overflow-hidden border-y border-white/5 bg-void py-4">
     <div class="marquee flex w-max gap-8">
       {marqueeSkills.map((skill) => (
-        <span class="font-mono text-sm text-text-dim">{skill}</span>
+        <span class="font-mono text-sm text-accent-soft/70">{skill}</span>
       ))}
     </div>
   </div>
 
   <!-- 01 / About -->
-  <section id="about" class="theme-light relative bg-bg mx-auto max-w-3xl px-6 py-24">
-    <p class="reveal font-mono text-sm text-accent-soft">01 / ABOUT</p>
-    <h2 class="reveal mt-3 font-display text-4xl font-semibold text-text sm:text-5xl">
-      A sideways path into AI research.
-    </h2>
+  <section id="about" class="theme-light relative bg-bg px-6 py-24 lg:px-12">
+    <div class="mx-auto max-w-7xl">
+      <p class="reveal font-mono text-sm text-accent-soft">01 / ABOUT</p>
+      <h2 class="reveal mt-3 font-display text-4xl font-semibold text-text sm:text-5xl">
+        A sideways path into AI research.
+      </h2>
 
-    <div class="reveal mt-8 space-y-5 text-base leading-relaxed text-text-muted">
-      <p>
-        I didn't start out planning to work in artificial intelligence. I completed pre-medical secondary
-        education with a distinction in Biology, expecting to study medicine — the move into Data Science
-        that followed was neither planned nor smooth, and my first years of the degree show it.
-      </p>
-      <p>
-        What matters more to me than that early record is what came after: as I built confidence in
-        programming and quantitative reasoning, my academic performance recovered and then strengthened
-        considerably. That recovery coincided with the point I stopped treating AI as a subject to pass and
-        started treating it as a set of open problems — specifically, what happens to a model once it
-        leaves the clean conditions of a benchmark.
-      </p>
-    </div>
+      <div class="reveal mt-8 max-w-3xl space-y-5 text-base leading-relaxed text-text-muted">
+        <p>
+          I didn't start out planning to work in artificial intelligence. I completed pre-medical secondary
+          education with a distinction in Biology, expecting to study medicine — the move into Data Science
+          that followed was neither planned nor smooth, and my first years of the degree show it.
+        </p>
+        <p>
+          What matters more to me than that early record is what came after: as I built confidence in
+          programming and quantitative reasoning, my academic performance recovered and then strengthened
+          considerably. That recovery coincided with the point I stopped treating AI as a subject to pass and
+          started treating it as a set of open problems — specifically, what happens to a model once it
+          leaves the clean conditions of a benchmark.
+        </p>
+      </div>
 
-    <div class="reveal mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-      {coreValues.map((v, i) => (
-        <div class="spot-card glass rounded-2xl p-5 transition-transform duration-300 hover:-translate-y-1" style={`transition-delay:${i * 60}ms`}>
-          <div class="flex h-9 w-9 items-center justify-center rounded-full border border-accent/30 text-accent">
-            {v.icon}
+      <div class="reveal mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {coreValues.map((v, i) => (
+          <div class="spot-card glass rounded-2xl p-5 transition-transform duration-300 hover:-translate-y-1" style={`transition-delay:${i * 60}ms`}>
+            <div class="flex h-9 w-9 items-center justify-center rounded-full border border-accent/30 text-accent">
+              {v.icon}
+            </div>
+            <h3 class="mt-3 font-display text-sm font-semibold text-text">{v.name}</h3>
+            <p class="mt-1.5 text-xs leading-relaxed text-text-muted">{v.description}</p>
           </div>
-          <h3 class="mt-3 font-display text-sm font-semibold text-text">{v.name}</h3>
-          <p class="mt-1.5 text-xs leading-relaxed text-text-muted">{v.description}</p>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </section>
 
   <!-- 02 / Experience -->
-  <section id="experience" class="relative bg-bg mx-auto max-w-3xl px-6 py-24">
-    <p class="reveal font-mono text-sm text-accent-soft">02 / EXPERIENCE</p>
-    <h2 class="reveal mt-3 font-display text-4xl font-semibold text-text sm:text-5xl">
-      Teaching, and building on the side.
-    </h2>
-    <p class="reveal mt-4 max-w-2xl text-text-muted">
-      Alongside my degree and research, I've spent close to four years teaching — and a couple of years
-      building web products for clients before that.
-    </p>
+  <section id="experience" class="relative bg-bg px-6 py-24 lg:px-12">
+    <div class="mx-auto max-w-6xl">
+      <p class="reveal font-mono text-sm text-accent-soft">02 / EXPERIENCE</p>
+      <h2 class="reveal mt-3 font-display text-4xl font-semibold text-text sm:text-5xl">
+        Teaching, and building on the side.
+      </h2>
+      <p class="reveal mt-4 max-w-2xl text-text-muted">
+        Alongside my degree and research, I've spent close to four years teaching — and a couple of years
+        building web products for clients before that.
+      </p>
 
-    <div class="mt-10 space-y-5 border-l border-border pl-6">
-      {experience.map((e, i) => (
-        <div class="reveal relative" style={`transition-delay:${i * 60}ms`}>
-          <span class="absolute -left-[27px] top-1.5 h-2.5 w-2.5 rounded-full bg-accent"></span>
-          <p class="font-mono text-xs uppercase tracking-wide text-text-dim">{e.period}</p>
-          <h3 class="mt-1 font-display text-xl font-semibold text-text">{e.role}</h3>
-          <p class="text-sm text-accent-soft">{e.org}</p>
-          <p class="mt-1.5 text-sm leading-relaxed text-text-muted">{e.description}</p>
-        </div>
-      ))}
+      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {experience.map((e, i) => (
+          <div
+            class="reveal-pop group relative flex flex-col overflow-hidden rounded-3xl border border-black/5 p-6 shadow-[0_25px_60px_-25px_rgba(0,0,0,0.65)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_35px_70px_-25px_rgba(0,0,0,0.75)]"
+            style={`transition-delay:${i * 80}ms; background: linear-gradient(155deg, #f4ead9 0%, #e8d8c4 55%, #dcc9ac 100%);`}
+          >
+            <div
+              class="pointer-events-none absolute -top-10 -right-10 h-28 w-28 rounded-full opacity-60 blur-2xl transition-opacity duration-500 group-hover:opacity-90"
+              style="background: radial-gradient(circle, #9c2c3d55, transparent 70%);"
+            >
+            </div>
+            <p class="font-mono text-[11px] uppercase tracking-wide" style="color:#8a7360;">{e.period}</p>
+            <h3 class="mt-2 font-display text-lg font-semibold" style="color:#2a1013;">{e.role}</h3>
+            <p class="text-xs font-medium" style="color:#6d2932;">{e.org}</p>
+            <p class="mt-3 text-sm leading-relaxed" style="color:#5c4c3f;">{e.description}</p>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
   <!-- 03 / Education -->
-  <section id="education" class="theme-light relative bg-bg mx-auto max-w-3xl px-6 py-24">
-    <p class="reveal font-mono text-sm text-accent-soft">03 / EDUCATION</p>
-    <h2 class="reveal mt-3 font-display text-4xl font-semibold text-text sm:text-5xl">
-      The credentials, for the record.
-    </h2>
+  <section id="education" class="theme-light relative bg-bg px-6 py-24 lg:px-12">
+    <div class="mx-auto max-w-6xl">
+      <p class="reveal font-mono text-sm text-accent-soft">03 / EDUCATION</p>
+      <h2 class="reveal mt-3 font-display text-4xl font-semibold text-text sm:text-5xl">
+        The credentials, for the record.
+      </h2>
 
-    <div class="mt-10 space-y-5 border-l border-border pl-6">
-      {education.map((e, i) => (
-        <div class="reveal relative" style={`transition-delay:${i * 60}ms`}>
-          <span class="absolute -left-[27px] top-1.5 h-2.5 w-2.5 rounded-full bg-accent"></span>
-          <p class="font-mono text-xs uppercase tracking-wide text-text-dim">{e.period}</p>
-          <h3 class="mt-1 font-display text-xl font-semibold text-text">{e.degree}</h3>
-          <p class="text-sm text-accent-soft">{e.institution}</p>
-          <p class="mt-1.5 text-sm leading-relaxed text-text-muted">{e.description}</p>
+      <div class="reveal-pop mt-12 overflow-hidden rounded-[2rem] border border-border bg-surface/60 p-8 md:p-10">
+        <div class="grid gap-10 md:grid-cols-3 md:divide-x md:divide-border">
+          {education.map((e, i) => (
+            <div class="md:px-8 md:first:pl-0 md:last:pr-0">
+              <span class="font-mono text-2xl font-semibold text-accent/40">{String(i + 1).padStart(2, "0")}</span>
+              <p class="mt-3 font-mono text-xs uppercase tracking-wide text-text-dim">{e.period}</p>
+              <h3 class="mt-1 font-display text-xl font-semibold text-text">{e.degree}</h3>
+              <p class="text-sm text-accent-soft">{e.institution}</p>
+              <p class="mt-2 text-sm leading-relaxed text-text-muted">{e.description}</p>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
+      </div>
 
-    <div class="reveal mt-10 flex flex-wrap gap-2">
-      {allSkills.slice(0, 14).map((s) => (
-        <span class="rounded-full border border-border bg-surface-2/50 px-3 py-1 text-xs text-text-muted">{s}</span>
-      ))}
+      <div class="reveal mt-10 flex flex-wrap gap-2">
+        {allSkills.slice(0, 14).map((s) => (
+          <span class="rounded-full border border-border bg-surface-2/50 px-3 py-1 text-xs text-text-muted">{s}</span>
+        ))}
+      </div>
     </div>
   </section>
 
   <!-- 04 / Research -->
-  <section id="research" class="relative bg-bg mx-auto max-w-3xl px-6 py-24">
-    <p class="reveal font-mono text-sm text-accent-soft">04 / RESEARCH</p>
-    <h2 class="reveal mt-3 font-display text-4xl font-semibold text-text sm:text-5xl">
-      Making AI systems trustworthy.
-    </h2>
-    <p class="reveal mt-4 text-text-muted">
-      My research centers on one question: what makes an intelligent system dependable once the conditions
-      it operates under are far less controlled than the ones it was trained and evaluated on.
-    </p>
+  <section id="research" class="relative bg-bg px-6 py-24 lg:px-12">
+    <div class="mx-auto max-w-5xl">
+      <p class="reveal font-mono text-sm text-accent-soft">04 / RESEARCH</p>
+      <h2 class="reveal mt-3 font-display text-4xl font-semibold text-text sm:text-5xl">
+        Making healthcare AI worth trusting.
+      </h2>
+      <p class="reveal mt-4 max-w-2xl text-text-muted">
+        Most of my research sits at the intersection of machine learning and healthcare — where a wrong
+        prediction isn't a bad metric, it's a bad decision about a real patient. I care less about squeezing
+        out another accuracy point than about whether a model's output can survive being questioned.
+      </p>
 
-    <div class="reveal mt-6 flex flex-wrap gap-2">
-      {researchInterests.map((r) => (
-        <span class="rounded-full border border-accent/30 bg-accent/5 px-3 py-1.5 text-sm text-accent-soft">{r}</span>
-      ))}
-    </div>
+      <div class="reveal mt-6 flex flex-wrap gap-2">
+        {researchInterests.map((r) => (
+          <span class="rounded-full border border-accent/30 bg-accent/5 px-3 py-1.5 text-sm text-accent-soft">{r}</span>
+        ))}
+      </div>
 
-    <div class="mt-10 space-y-5">
-      {publications.map((pub, i) => (
-        <div class="spot-card reveal glass rounded-2xl p-6 transition-transform duration-300 hover:-translate-y-1" style={`transition-delay:${i * 60}ms`}>
-          <div class="flex items-start justify-between gap-4">
-            <h3 class="font-display text-lg font-semibold leading-snug text-text">{pub.title}</h3>
-            <span class:list={["flex-shrink-0 rounded-full border px-2.5 py-0.5 text-xs", pub.status === "Published" ? "border-mist/40 text-mist" : "border-accent-2/40 text-accent-2"]}>
-              {pub.status}
-            </span>
+      <div class="mt-12 space-y-6">
+        {publications.map((pub, i) => (
+          <div
+            class="reveal-pop group relative overflow-hidden rounded-2xl border border-border bg-surface/50 pl-7 transition-all duration-500 hover:border-accent-2/40 hover:bg-surface/80"
+            style={`transition-delay:${i * 100}ms`}
+          >
+            <span class="absolute inset-y-0 left-0 w-1.5 bg-gradient-to-b from-accent to-accent-2"></span>
+            <div class="flex flex-col gap-4 p-6 sm:p-8 md:flex-row md:items-start">
+              <span class="font-display text-4xl font-semibold text-accent/25 transition-colors duration-500 group-hover:text-accent/50">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div class="flex-1">
+                <div class="flex flex-wrap items-start justify-between gap-3">
+                  <h3 class="font-display text-xl font-semibold leading-snug text-text">{pub.title}</h3>
+                  <span class:list={["flex-shrink-0 rounded-full border px-2.5 py-0.5 text-xs", pub.status === "Published" ? "border-mist/40 text-mist" : "border-accent-2/40 text-accent-2"]}>
+                    {pub.status}
+                  </span>
+                </div>
+                <p class="mt-3 text-sm text-text-muted">{pub.authors}</p>
+                <p class="mt-1 font-mono text-xs uppercase tracking-wide text-text-dim">{pub.venue} &middot; {pub.year}</p>
+              </div>
+            </div>
           </div>
-          <p class="mt-2 text-sm text-text-muted">{pub.authors}</p>
-          <p class="mt-1 text-sm text-text-dim">{pub.venue} &middot; {pub.year}</p>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </section>
 
   <!-- 05 / Work -->
-  <section id="work" class="theme-light relative bg-bg mx-auto max-w-5xl px-6 py-24">
-    <p class="reveal font-mono text-sm text-accent-soft">05 / WORK</p>
-    <h2 class="reveal mt-3 font-display text-4xl font-semibold text-text sm:text-5xl">
-      Systems, not just models.
-    </h2>
-    <p class="reveal mt-4 max-w-2xl text-text-muted">
-      From research prototypes to production-facing platforms — the common thread is testing whether an
-      idea holds up once real users and messy data get involved.
-    </p>
+  <section id="work" class="theme-light relative bg-bg px-6 py-24 lg:px-12">
+    <div class="mx-auto max-w-6xl">
+      <p class="reveal font-mono text-sm text-accent-soft">05 / WORK</p>
+      <h2 class="reveal mt-3 font-display text-4xl font-semibold text-text sm:text-5xl">
+        Systems, not just models.
+      </h2>
+      <p class="reveal mt-4 max-w-2xl text-text-muted">
+        From research prototypes to production-facing platforms — the common thread is testing whether an
+        idea holds up once real users and messy data get involved.
+      </p>
 
-    <ProjectStack client:visible />
+      <ProjectStack client:visible />
+    </div>
   </section>
 
   <!-- 06 / Beyond the Code -->
-  <section id="beyond" class="relative bg-bg mx-auto max-w-3xl px-6 py-24">
-    <p class="reveal font-mono text-sm text-accent-soft">06 / BEYOND THE CODE</p>
-    <h2 class="reveal mt-3 font-display text-4xl font-semibold text-text sm:text-5xl">
-      The résumé stuff, plus the rest.
-    </h2>
+  <section id="beyond" class="relative bg-bg px-6 py-24 lg:px-12">
+    <div class="mx-auto max-w-6xl">
+      <p class="reveal font-mono text-sm text-accent-soft">06 / BEYOND THE CODE</p>
+      <h2 class="reveal mt-3 font-display text-4xl font-semibold text-text sm:text-5xl">
+        Credentials, leadership, and a bit of life.
+      </h2>
 
-    <div class="mt-10 grid gap-10 sm:grid-cols-2">
-      <div>
-        <h3 class="reveal font-display text-lg font-semibold text-text">Certifications</h3>
-        <ul class="mt-5 space-y-3">
-          {certifications.map((c) => (
-            <li class="reveal text-sm text-text-muted">
-              <span class="text-text">{c.title}</span> &middot; {c.issuer}
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div>
-        <h3 class="reveal font-display text-lg font-semibold text-text">Leadership &amp; Activities</h3>
-        <ul class="mt-5 space-y-3">
-          {activities.map((a) => (
-            <li class="reveal text-sm text-text-muted">
-              <span class="text-text">{a.role}</span>, {a.org} &middot; {a.period}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+      <div class="reveal-pop mt-12 rounded-[2rem] border border-white/5 bg-surface/40 p-6 md:p-10">
+        <div class="grid gap-10 lg:grid-cols-2">
+          <div>
+            <h3 class="font-display text-lg font-semibold text-text">Certifications</h3>
+            <div class="mt-5 space-y-3">
+              {certifications.map((c) => (
+                <div class="flex items-center gap-3 rounded-xl border border-border bg-surface-2/40 px-4 py-3 transition-colors duration-300 hover:bg-surface-2/70">
+                  <span class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </span>
+                  <div>
+                    <p class="text-sm font-medium text-text">{c.title}</p>
+                    <p class="text-xs text-text-dim">{c.issuer}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div>
+            <h3 class="font-display text-lg font-semibold text-text">Leadership &amp; Activities</h3>
+            <div class="mt-5 space-y-3">
+              {activities.map((a) => (
+                <div class="flex items-center gap-3 rounded-xl border border-border bg-surface-2/40 px-4 py-3 transition-colors duration-300 hover:bg-surface-2/70">
+                  <span class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-accent-2/15 text-accent-2">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+                    </svg>
+                  </span>
+                  <div>
+                    <p class="text-sm font-medium text-text">{a.role}</p>
+                    <p class="text-xs text-text-dim">{a.org} &middot; {a.period}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
 
-    <div class="reveal mt-10 flex flex-wrap gap-2">
-      {hobbies.map((h) => (
-        <span class="rounded-full border border-border bg-surface-2/50 px-3 py-1 text-xs text-text-muted">{h}</span>
-      ))}
+        <div class="mt-10 flex flex-wrap gap-2 border-t border-white/5 pt-8">
+          {hobbies.map((h) => (
+            <span class="rounded-full border border-border bg-surface-2/50 px-3 py-1 text-xs text-text-muted">{h}</span>
+          ))}
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- 07 / Contact -->
-  <section id="contact" class="theme-light relative bg-bg mx-auto max-w-2xl px-6 py-24">
-    <p class="reveal font-mono text-sm text-accent-soft">07 / CONTACT</p>
-    <h2 class="reveal mt-3 font-display text-4xl font-semibold text-text sm:text-5xl">Let's talk.</h2>
-    <p class="reveal mt-4 text-text-muted">
-      Research collaboration, project ideas, or opportunities — send a message and I'll get back to you.
-    </p>
+  <section id="contact" class="theme-light relative bg-bg px-6 py-24 lg:px-12">
+    <div class="mx-auto max-w-6xl text-center">
+      <p class="reveal font-mono text-sm text-accent-soft">07 / CONTACT</p>
+      <h2 class="reveal mt-3 font-display text-4xl font-semibold text-text sm:text-5xl">Let's talk.</h2>
+      <p class="reveal mx-auto mt-4 max-w-xl text-text-muted">
+        Research collaboration, project ideas, or opportunities — reach out through any of these.
+      </p>
 
-    <!-- Social bar: always dark, regardless of the section's own light/dark banding -->
-    <div
-      class="reveal mt-10 flex items-center justify-center gap-6 rounded-full border border-white/10 px-8 py-5 shadow-lg"
-      style="background: linear-gradient(135deg, #2a0f13 0%, #1a0a0d 55%, #2a0f13 100%);"
-    >
-      <a
-        href={profile.social.github}
-        aria-label="GitHub"
-        class="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 text-[#c7b7a3] transition-all hover:-translate-y-0.5 hover:border-[#e8d8c4]/50 hover:text-[#e8d8c4]"
+      <!-- Social bar: always dark, regardless of the section's own light/dark banding -->
+      <div
+        class="reveal mx-auto mt-10 flex w-fit items-center justify-center gap-6 rounded-full border border-white/10 px-8 py-5 shadow-lg"
+        style="background: linear-gradient(135deg, #2a0f13 0%, #1a0a0d 55%, #2a0f13 100%);"
       >
-        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-      </a>
-      <a
-        href={`mailto:${profile.email}`}
-        aria-label="Email"
-        class="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 text-[#c7b7a3] transition-all hover:-translate-y-0.5 hover:border-[#e8d8c4]/50 hover:text-[#e8d8c4]"
-      >
-        <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-      </a>
-      <a
-        href={profile.social.linkedin}
-        aria-label="LinkedIn"
-        class="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 text-[#c7b7a3] transition-all hover:-translate-y-0.5 hover:border-[#e8d8c4]/50 hover:text-[#e8d8c4]"
-      >
-        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-      </a>
+        <a
+          href={profile.social.github}
+          aria-label="GitHub"
+          class="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 text-[#c7b7a3] transition-all hover:-translate-y-0.5 hover:border-[#e8d8c4]/50 hover:text-[#e8d8c4]"
+        >
+          <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        </a>
+        <a
+          href={`mailto:${profile.email}`}
+          aria-label="Email"
+          class="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 text-[#c7b7a3] transition-all hover:-translate-y-0.5 hover:border-[#e8d8c4]/50 hover:text-[#e8d8c4]"
+        >
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        </a>
+        <a
+          href={profile.social.linkedin}
+          aria-label="LinkedIn"
+          class="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 text-[#c7b7a3] transition-all hover:-translate-y-0.5 hover:border-[#e8d8c4]/50 hover:text-[#e8d8c4]"
+        >
+          <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+        <a
+          href={profile.social.scholar}
+          aria-label="Google Scholar"
+          class="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 text-[#c7b7a3] transition-all hover:-translate-y-0.5 hover:border-[#e8d8c4]/50 hover:text-[#e8d8c4]"
+        >
+          <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2L1 7l11 5 9-4.09V16h2V7L12 2z" />
+            <path d="M5 10.5V15c0 1.66 3.13 3 7 3s7-1.34 7-3v-4.5l-7 3.18-7-3.18z" />
+          </svg>
+        </a>
+      </div>
+
+      <p class="reveal mt-8 text-sm text-text-dim">
+        Prefer email? Reach me directly at
+        <a href={`mailto:${profile.email}`} class="text-accent-soft underline underline-offset-4 hover:text-accent">{profile.email}</a>
+      </p>
     </div>
-
-    <form
-      name="contact"
-      method="POST"
-      data-netlify="true"
-      netlify-honeypot="bot-field"
-      action="/thank-you"
-      class="reveal glass mt-10 space-y-5 rounded-2xl p-6 sm:p-8"
-    >
-      <input type="hidden" name="form-name" value="contact" />
-      <p class="hidden"><label>Don't fill this out: <input name="bot-field" /></label></p>
-
-      <div>
-        <label for="name" class="mb-1.5 block text-sm font-medium text-text">Name</label>
-        <input id="name" name="name" type="text" required class="w-full rounded-lg border border-border bg-surface-2/60 px-4 py-2.5 text-text placeholder:text-text-dim focus:border-accent focus:outline-none" placeholder="Your name" />
-      </div>
-      <div>
-        <label for="email" class="mb-1.5 block text-sm font-medium text-text">Email</label>
-        <input id="email" name="email" type="email" required class="w-full rounded-lg border border-border bg-surface-2/60 px-4 py-2.5 text-text placeholder:text-text-dim focus:border-accent focus:outline-none" placeholder="you@example.com" />
-      </div>
-      <div>
-        <label for="message" class="mb-1.5 block text-sm font-medium text-text">Message</label>
-        <textarea id="message" name="message" rows="5" required class="w-full rounded-lg border border-border bg-surface-2/60 px-4 py-2.5 text-text placeholder:text-text-dim focus:border-accent focus:outline-none" placeholder="What would you like to talk about?"></textarea>
-      </div>
-      <button type="submit" class="w-full rounded-full bg-accent px-7 py-3 font-medium text-void transition-all hover:-translate-y-0.5 hover:bg-accent-soft sm:w-auto">
-        Send Message
-      </button>
-    </form>
-
-    <p class="reveal mt-8 text-sm text-text-dim">
-      Prefer email? Reach me directly at
-      <a href={`mailto:${profile.email}`} class="text-accent-soft underline underline-offset-4 hover:text-accent">{profile.email}</a>
-    </p>
   </section>
 </Layout>
 

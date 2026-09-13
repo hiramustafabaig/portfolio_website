@@ -56,7 +56,11 @@ function StackedScroll({ intensity }: { intensity: number }) {
     offset: ["start start", "end end"],
   });
 
-  const activeIndexMV = useTransform(scrollYProgress, (p) => Math.min(count - 1, Math.max(0, Math.round(p * count))));
+  // progress spans "card 0 active" (0) to "last card active" (1) — dividing by
+  // (count - 1) rather than count means the final card settles at depth 0 and
+  // stays there through the end of the scroll range, instead of continuing on
+  // to fully exit before the wrapper's scroll runway is used up.
+  const activeIndexMV = useTransform(scrollYProgress, (p) => Math.min(count - 1, Math.max(0, Math.round(p * (count - 1)))));
   useMotionValueEvent(activeIndexMV, "change", (v) => setActiveIndex(v));
 
   return (
@@ -64,7 +68,7 @@ function StackedScroll({ intensity }: { intensity: number }) {
       <div className="sticky top-28 h-[62vh] min-h-[420px] sm:h-[58vh]">
         {projects.map((p, i) => {
           // eslint-disable-next-line react-hooks/rules-of-hooks
-          const depth = useTransform(scrollYProgress, (progress) => i - progress * count);
+          const depth = useTransform(scrollYProgress, (progress) => i - progress * (count - 1));
           return (
             <ProjectCard
               key={p.slug}

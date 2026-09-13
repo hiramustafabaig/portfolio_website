@@ -160,6 +160,18 @@
     transform: translateY(0);
   }
 
+  /* A slightly richer reveal (scale + fade) for sections that want to read
+     differently from the plain fade-up used elsewhere. */
+  .reveal-pop {
+    opacity: 0;
+    transform: translateY(24px) scale(0.94);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal-pop.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
   /* Spotlight-border card: a soft cursor-tracked highlight plus a gradient
      border that only appears on hover — the "not-a-conventional-card" treatment. */
   .spot-card {

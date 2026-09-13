@@ -3,9 +3,9 @@ import { motion, useMotionValue, useSpring, useTransform, type MotionValue } fro
 import type { Project } from "../../data/projects";
 
 const statusColor: Record<Project["status"], string> = {
-  Live: "text-mist border-mist/40",
-  "In Progress": "text-accent-soft border-accent/40",
-  Research: "text-accent-2 border-accent-2/40",
+  Live: "text-mist border-mist/40 bg-mist/10",
+  "In Progress": "text-accent-soft border-accent/40 bg-accent/10",
+  Research: "text-accent-2 border-accent-2/40 bg-accent-2/10",
 };
 
 /** A restrained, per-project abstract mark for cards with no screenshot — kept
@@ -112,47 +112,46 @@ export default function ProjectCard({
         <motion.article
           ref={cardRef}
           id={project.slug}
-          className="spot-card glass scroll-mt-28 rounded-3xl border border-border/70 p-6 shadow-[0_20px_60px_-25px_rgba(0,0,0,0.5)] sm:p-9"
+          className="spot-card group glass scroll-mt-28 overflow-hidden rounded-[2rem] border border-border/70 shadow-[0_20px_60px_-25px_rgba(0,0,0,0.5)]"
           style={{ rotateX: springX, rotateY: springY, transformPerspective: 900 }}
           onPointerMove={handlePointerMove}
           onPointerLeave={handlePointerLeave}
         >
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
-            <div className="h-28 w-28 flex-shrink-0 overflow-hidden rounded-2xl bg-surface-2/70 sm:h-32 sm:w-32">
-              {project.image ? (
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  width={160}
-                  height={160}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-                />
-              ) : (
-                <AbstractVisual slug={project.slug} />
-              )}
-            </div>
-            <div className="flex-1">
-              <div className="flex flex-wrap items-center gap-3">
-                <h3 className="font-display text-2xl font-semibold text-text sm:text-3xl">{project.title}</h3>
-                <span className={`rounded-full border px-2.5 py-0.5 text-xs ${statusColor[project.status]}`}>
-                  {project.status}
-                </span>
-              </div>
-              <p className="mt-3 text-sm leading-relaxed text-text-muted sm:text-base">{project.description}</p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {project.tech.map((t) => (
-                  <span key={t} className="rounded-full border border-border bg-surface-2/50 px-3 py-1 text-xs text-text-muted">
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </div>
+          <div className="relative h-40 w-full overflow-hidden bg-surface-2/70 sm:h-48">
+            {project.image ? (
+              <img
+                src={project.image}
+                alt={project.title}
+                width={640}
+                height={360}
+                loading="lazy"
+                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+            ) : (
+              <AbstractVisual slug={project.slug} />
+            )}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-surface/70 via-transparent to-transparent"></div>
+            <span
+              className={`absolute right-4 top-4 rounded-full border px-3 py-1 font-mono text-[11px] uppercase tracking-wide backdrop-blur-sm ${statusColor[project.status]}`}
+            >
+              {project.status}
+            </span>
+            <span className="absolute left-4 top-4 font-mono text-xs text-text-dim/80">
+              {String(index + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}
+            </span>
           </div>
 
-          <p className="mt-6 font-mono text-xs text-text-dim">
-            {String(index + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}
-          </p>
+          <div className="p-6 sm:p-8">
+            <h3 className="font-display text-2xl font-semibold text-text sm:text-3xl">{project.title}</h3>
+            <p className="mt-3 text-sm leading-relaxed text-text-muted sm:text-base">{project.description}</p>
+            <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-border/60 pt-4">
+              {project.tech.map((t) => (
+                <span key={t} className="font-mono text-xs uppercase tracking-wide text-text-dim">
+                  {t}
+                </span>
+              ))}
+            </div>
+          </div>
         </motion.article>
       </motion.div>
     </motion.div>

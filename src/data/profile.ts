@@ -9,6 +9,7 @@ export const profile = {
   social: {
     github: "https://github.com/hiramustafabaig",
     linkedin: "https://www.linkedin.com/in/hira-baig-195b13338/",
+    scholar: "https://scholar.google.com/citations?hl=en&user=5gVqJzcAAAAJ",
   },
 } as const;
 
