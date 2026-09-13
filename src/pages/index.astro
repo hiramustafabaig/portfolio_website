@@ -14,7 +14,7 @@ const marqueeSkills = [...allSkills, ...allSkills];
 
 <Layout
   title="Hira Baig"
-  description="Data Scientist & AI/ML Engineer building trustworthy, explainable AI systems — from published research to production platforms."
+  description="Data Scientist & AI/ML Engineer building trustworthy, explainable AI systems, from published research to production platforms."
   path="/"
 >
   <!-- Hero -->
@@ -32,7 +32,7 @@ const marqueeSkills = [...allSkills, ...allSkills];
           Hira <span class="text-gradient">Baig</span>
         </h1>
         <p class="reveal mx-auto mt-6 max-w-xl text-xl leading-relaxed text-text-muted lg:mx-0">
-          Building intelligent systems through data, machine learning, and research — work built to survive
+          Building intelligent systems through data, machine learning, and research, work built to survive
           contact with real users, not just a benchmark.
         </p>
 
@@ -103,14 +103,14 @@ const marqueeSkills = [...allSkills, ...allSkills];
       <div class="reveal mt-8 max-w-3xl space-y-5 text-base leading-relaxed text-text-muted">
         <p>
           I didn't start out planning to work in artificial intelligence. I completed pre-medical secondary
-          education with a distinction in Biology, expecting to study medicine — the move into Data Science
+          education with a distinction in Biology, expecting to study medicine, and the move into Data Science
           that followed was neither planned nor smooth, and my first years of the degree show it.
         </p>
         <p>
           What matters more to me than that early record is what came after: as I built confidence in
           programming and quantitative reasoning, my academic performance recovered and then strengthened
           considerably. That recovery coincided with the point I stopped treating AI as a subject to pass and
-          started treating it as a set of open problems — specifically, what happens to a model once it
+          started treating it as a set of open problems, specifically, what happens to a model once it
           leaves the clean conditions of a benchmark.
         </p>
       </div>
@@ -137,7 +137,7 @@ const marqueeSkills = [...allSkills, ...allSkills];
         Teaching, and building on the side.
       </h2>
       <p class="reveal mt-4 max-w-2xl text-text-muted">
-        Alongside my degree and research, I've spent close to four years teaching — and a couple of years
+        Alongside my degree and research, I've spent close to four years teaching, and a couple of years
         building web products for clients before that.
       </p>
 
@@ -200,7 +200,7 @@ const marqueeSkills = [...allSkills, ...allSkills];
         Making healthcare AI worth trusting.
       </h2>
       <p class="reveal mt-4 max-w-2xl text-text-muted">
-        Most of my research sits at the intersection of machine learning and healthcare — where a wrong
+        Most of my research sits at the intersection of machine learning and healthcare, where a wrong
         prediction isn't a bad metric, it's a bad decision about a real patient. I care less about squeezing
         out another accuracy point than about whether a model's output can survive being questioned.
       </p>
@@ -265,7 +265,7 @@ const marqueeSkills = [...allSkills, ...allSkills];
         Systems, not just models.
       </h2>
       <p class="reveal mt-4 max-w-2xl text-text-muted">
-        From research prototypes to production-facing platforms — the common thread is testing whether an
+        From research prototypes to production-facing platforms, the common thread is testing whether an
         idea holds up once real users and messy data get involved.
       </p>
 
@@ -281,49 +281,70 @@ const marqueeSkills = [...allSkills, ...allSkills];
         Credentials, leadership, and a bit of life.
       </h2>
 
-      <div class="reveal-pop mt-12 rounded-[2rem] border border-white/5 bg-surface/40 p-6 md:p-10">
-        <div class="grid gap-10 lg:grid-cols-2">
-          <div>
-            <h3 class="font-display text-lg font-semibold text-text">Certifications</h3>
-            <div class="mt-5 space-y-4">
-              {certifications.map((c, i) => (
-                <div
-                  class="spot-card reveal-pop group relative flex items-center gap-3 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-surface-2/80 to-surface/50 px-5 py-4 shadow-[0_15px_40px_-22px_rgba(0,0,0,0.7)] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.75)]"
+      <div class="mt-12 grid items-start gap-8 lg:grid-cols-2">
+        <div class="reveal-pop group/card relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-surface-2/80 to-surface/40 p-6 shadow-[0_25px_70px_-30px_rgba(0,0,0,0.7)] transition-all duration-500 hover:border-accent-soft/40 md:p-8">
+          <div class="flex items-center gap-3">
+            <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </span>
+            <h3 class="font-display text-xl font-semibold text-text">Certifications</h3>
+          </div>
+          <div class="mt-6 space-y-3">
+            {certifications.map((c, i) => {
+              const Tag = c.href ? "a" : "div";
+              return (
+                <Tag
+                  {...(c.href ? { href: c.href, target: "_blank", rel: "noopener noreferrer" } : {})}
+                  class="spot-card reveal-pop group relative flex items-center justify-between gap-3 overflow-hidden rounded-2xl border border-white/10 bg-surface/50 px-5 py-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent-soft/40"
                   style={`transition-delay:${i * 70}ms`}
                 >
-                  <span class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
-                    <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </span>
                   <div>
                     <p class="text-sm font-medium text-text">{c.title}</p>
-                    <p class="text-xs text-text-dim">{c.issuer}</p>
+                    <p class="text-xs text-mist">{c.issuer}</p>
                   </div>
-                </div>
-              ))}
-            </div>
+                  {c.href && (
+                    <svg class="h-3.5 w-3.5 flex-shrink-0 text-accent-soft" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  )}
+                </Tag>
+              );
+            })}
           </div>
-          <div>
-            <h3 class="font-display text-lg font-semibold text-text">Leadership &amp; Activities</h3>
-            <div class="mt-5 space-y-4">
-              {activities.map((a, i) => (
-                <div
-                  class="spot-card reveal-pop group relative flex items-center gap-3 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-surface-2/80 to-surface/50 px-5 py-4 shadow-[0_15px_40px_-22px_rgba(0,0,0,0.7)] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.75)]"
+        </div>
+
+        <div class="reveal-pop group/card relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-surface-2/80 to-surface/40 p-6 shadow-[0_25px_70px_-30px_rgba(0,0,0,0.7)] transition-all duration-500 hover:border-accent-soft/40 md:p-8">
+          <div class="flex items-center gap-3">
+            <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-accent-2/15 text-accent-2">
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+              </svg>
+            </span>
+            <h3 class="font-display text-xl font-semibold text-text">Leadership &amp; Activities</h3>
+          </div>
+          <div class="mt-6 space-y-3">
+            {activities.map((a, i) => {
+              const Tag = a.href ? "a" : "div";
+              return (
+                <Tag
+                  {...(a.href ? { href: a.href, target: "_blank", rel: "noopener noreferrer" } : {})}
+                  class="spot-card reveal-pop group relative flex items-center justify-between gap-3 overflow-hidden rounded-2xl border border-white/10 bg-surface/50 px-5 py-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent-soft/40"
                   style={`transition-delay:${i * 70}ms`}
                 >
-                  <span class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-accent-2/15 text-accent-2">
-                    <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
-                    </svg>
-                  </span>
                   <div>
                     <p class="text-sm font-medium text-text">{a.role}</p>
-                    <p class="text-xs text-text-dim">{a.org} &middot; {a.period}</p>
+                    <p class="text-xs text-mist">{a.org} &middot; {a.period}</p>
                   </div>
-                </div>
-              ))}
-            </div>
+                  {a.href && (
+                    <svg class="h-3.5 w-3.5 flex-shrink-0 text-accent-soft" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  )}
+                </Tag>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -336,7 +357,7 @@ const marqueeSkills = [...allSkills, ...allSkills];
       <p class="reveal font-mono text-sm text-accent-soft">07 / CONTACT</p>
       <h2 class="reveal mt-3 font-display text-4xl font-semibold text-text sm:text-5xl">Let's talk.</h2>
       <p class="reveal mx-auto mt-4 max-w-xl text-text-muted">
-        Research collaboration, project ideas, or opportunities — reach out through any of these.
+        Research collaboration, project ideas, or opportunities, reach out through any of these.
       </p>
 
       <!-- Social bar: always the dark theme's maroon tones, regardless of the

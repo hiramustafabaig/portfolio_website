@@ -17,7 +17,7 @@ export const education: EducationEntry[] = [
     degree: "FSc Pre-Medical",
     institution: "Islamabad Model College for Girls, F-7/2",
     period: "2019 – 2021",
-    description: "Distinction in Biology — the foundation for my continued interest in healthcare and biomedical AI.",
+    description: "Distinction in Biology, the foundation for my continued interest in healthcare and biomedical AI.",
   },
   {
     degree: "Matriculation in Science",
@@ -42,7 +42,7 @@ export const experience: ExperienceEntry[] = [
     description: "Selected to deliver Biology and Computer Science tutoring to IGCSE and A-Level students.",
   },
   {
-    role: "Private Tutor — Biology & Computer Science",
+    role: "Private Tutor, Biology & Computer Science",
     org: "Online",
     period: "2023 – Present",
     description: "Mentored 10+ international students one-on-one through concept-based, personalized instruction.",

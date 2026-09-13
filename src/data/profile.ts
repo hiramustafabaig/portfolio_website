@@ -5,7 +5,7 @@ export const profile = {
   location: "Islamabad, Pakistan",
   email: "hirabaig1357@gmail.com",
   summary:
-    "Final-semester Data Science student researching trustworthy, explainable machine learning for healthcare and real-world deployment. I came into computing from a Biology background, and now build AI-powered systems end-to-end — from published research to production-facing platforms.",
+    "Final-semester Data Science student researching trustworthy, explainable machine learning for healthcare and real-world deployment. I came into computing from a Biology background, and now build AI-powered systems end-to-end, from published research to production-facing platforms.",
   social: {
     github: "https://github.com/hiramustafabaig",
     linkedin: "https://www.linkedin.com/in/hira-baig-195b13338/",
@@ -24,13 +24,13 @@ export const coreValues = [
     name: "Explainability",
     icon: "◇",
     description:
-      "If a prediction can't be explained, it can't be trusted with a real decision — especially in healthcare. Evidence over accuracy scores alone.",
+      "If a prediction can't be explained, it can't be trusted with a real decision, especially in healthcare. Evidence over accuracy scores alone.",
   },
   {
     name: "Ship real systems",
     icon: "◆",
     description:
-      "Research questions are more honest when they come from a system real users touch — verification, matching, dashboards, not just notebooks.",
+      "Research questions are more honest when they come from a system real users touch, verification, matching, dashboards, not just notebooks.",
   },
   {
     name: "Lifelong learning",

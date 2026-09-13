@@ -65,7 +65,7 @@ function StackedScroll({ intensity }: { intensity: number }) {
 
   return (
     <div ref={wrapperRef} style={{ height: `${count * 85}vh` }} className="relative mt-12">
-      <div className="sticky top-28 h-[62vh] min-h-[420px] sm:h-[58vh]">
+      <div className="sticky top-28 h-[72vh] min-h-[520px] sm:h-[68vh]">
         {projects.map((p, i) => {
           // eslint-disable-next-line react-hooks/rules-of-hooks
           const depth = useTransform(scrollYProgress, (progress) => i - progress * (count - 1));
