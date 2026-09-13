@@ -16,10 +16,18 @@ const { title, description, path } = Astro.props;
 <html lang="en">
   <head>
     <BaseHead title={title} description={description} path={path} />
+    <script is:inline>
+      // Runs before paint so there's no flash of the wrong theme.
+      (function () {
+        var stored = localStorage.getItem("theme");
+        var wantsLight = stored ? stored === "light" : !window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (wantsLight) document.documentElement.classList.add("light");
+      })();
+    </script>
   </head>
   <body class="min-h-screen bg-bg text-text antialiased">
     <Nav />
-    <main class="pt-24">
+    <main>
       <slot />
     </main>
     <Footer />
@@ -37,6 +45,12 @@ const { title, description, path } = Astro.props;
         { threshold: 0.15 }
       );
       document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+      const themeToggle = document.getElementById("theme-toggle");
+      themeToggle?.addEventListener("click", () => {
+        const isLight = document.documentElement.classList.toggle("light");
+        localStorage.setItem("theme", isLight ? "light" : "dark");
+      });
     </script>
   </body>
 </html>

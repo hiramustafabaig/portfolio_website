@@ -4,6 +4,17 @@ import Hero3D from "../components/Hero3D";
 import { profile, coreValues } from "../data/profile";
 import { skillGroups } from "../data/skills";
 import { projects } from "../data/projects";
+import { education, teaching } from "../data/education";
+import { publications, researchInterests } from "../data/research";
+
+const allSkills = skillGroups.flatMap((g) => g.items);
+const marqueeSkills = [...allSkills, ...allSkills];
+
+const statusColor: Record<string, string> = {
+  Live: "text-violet-mist border-violet-mist/40",
+  "In Progress": "text-accent-soft border-accent/40",
+  Research: "text-accent-2 border-accent-2/40",
+};
 ---
 
 <Layout
@@ -12,130 +23,259 @@ import { projects } from "../data/projects";
   path="/"
 >
   <!-- Hero -->
-  <section class="relative flex min-h-[85vh] items-center overflow-hidden">
+  <section id="top" class="relative flex min-h-screen items-center overflow-hidden pt-24">
     <div
       class="pointer-events-none absolute inset-0"
-      style="background: linear-gradient(180deg, #1c2440 0%, #16223a 28%, #0d1728 55%, #0a1220 100%);"
-    >
-    </div>
-    <div
-      class="pointer-events-none absolute -right-24 bottom-0 h-[26rem] w-[26rem] rounded-full opacity-70 blur-3xl sm:h-[32rem] sm:w-[32rem]"
-      style="background: radial-gradient(circle, rgba(255,183,110,0.35) 0%, rgba(255,183,110,0) 70%);"
+      style="background: radial-gradient(circle at 50% 20%, color-mix(in srgb, var(--color-violet-deep) 55%, transparent), var(--color-bg) 70%);"
     >
     </div>
     <Hero3D client:only="react" />
     <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-bg via-transparent to-transparent"></div>
 
-    <div class="relative z-10 mx-auto max-w-5xl px-6 py-24 text-center">
-      <p class="reveal mb-4 font-display text-sm uppercase tracking-[0.3em] text-accent-soft">
-        {profile.role}
+    <div class="relative z-10 mx-auto max-w-4xl px-6 py-16 text-center">
+      <p class="reveal mb-4 font-mono text-xs uppercase tracking-[0.3em] text-accent-soft sm:text-sm">
+        Data Scientist &middot; AI/ML Researcher &middot; Islamabad, Pakistan
       </p>
-      <h1 class="reveal font-display text-5xl font-bold leading-[1.05] tracking-tight text-text sm:text-6xl md:text-7xl">
-        Hi, I'm <span class="text-gradient-dusk">Hira Baig</span>
+      <h1 class="reveal font-display text-4xl font-bold leading-[1.1] tracking-tight text-text sm:text-6xl">
+        I build AI that stays <span class="text-gradient">honest</span> once it leaves the lab.
       </h1>
-      <p class="reveal mx-auto mt-6 max-w-2xl text-lg text-text-muted sm:text-xl">
-        {profile.tagline}
+      <p class="reveal mx-auto mt-6 max-w-2xl text-base leading-relaxed text-text-muted sm:text-lg">
+        A model that scores well on a benchmark and a system you can actually trust are not the same thing.
+        That gap — between clean evaluation and messy reality — is the thread running through a federated
+        learning paper, a healthcare AI study, and QaamQaaj, a platform built for users the tech industry
+        usually designs around rather than for.
       </p>
+
       <div class="reveal mt-10 flex flex-wrap items-center justify-center gap-4">
         <a
-          href="/projects"
-          class="rounded-full bg-accent px-7 py-3 font-medium text-void shadow-lg shadow-accent/20 transition-all hover:-translate-y-0.5 hover:bg-accent-soft hover:shadow-accent/30"
+          href="#projects"
+          class="rounded-full bg-accent px-7 py-3 font-medium text-void shadow-lg shadow-accent/30 transition-all hover:-translate-y-0.5 hover:bg-accent-soft"
         >
-          View Projects
+          See the Work
         </a>
-        <a
-          href="/contact"
-          class="glass rounded-full px-7 py-3 font-medium text-text transition-all hover:-translate-y-0.5"
-        >
+        <a href="#contact" class="glass rounded-full px-7 py-3 font-medium text-text transition-all hover:-translate-y-0.5">
           Get in Touch
         </a>
       </div>
-    </div>
 
-    <div class="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 animate-bounce text-text-dim">
-      <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-      </svg>
-    </div>
-  </section>
+      <div class="reveal mt-8 flex items-center justify-center gap-4 text-sm text-text-dim">
+        <a href={profile.social.github} class="hover:text-accent-soft">GitHub</a>
+        <span>&middot;</span>
+        <a href={profile.social.linkedin} class="hover:text-accent-soft">LinkedIn</a>
+        <span>&middot;</span>
+        <a href={`mailto:${profile.email}`} class="hover:text-accent-soft">Email</a>
+      </div>
 
-  <!-- Skills -->
-  <section class="mx-auto max-w-5xl px-6 py-24">
-    <div class="reveal mb-12 text-center">
-      <h2 class="font-display text-3xl font-bold text-text sm:text-4xl">
-        Skills &amp; <span class="text-gradient-dusk">Expertise</span>
-      </h2>
-    </div>
-    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-      {skillGroups.map((group, i) => (
-        <div
-          class="reveal glass rounded-2xl p-6"
-          style={`transition-delay: ${i * 80}ms`}
-        >
-          <h3 class="font-display text-sm font-semibold uppercase tracking-wide text-accent-soft">
-            {group.category}
-          </h3>
-          <ul class="mt-4 flex flex-wrap gap-2">
-            {group.items.map((item) => (
-              <li class="rounded-full border border-border bg-surface-2/50 px-3 py-1 text-xs text-text-muted">
-                {item}
-              </li>
-            ))}
-          </ul>
+      <!-- Photo placeholder -->
+      <div class="reveal relative mx-auto mt-12 w-fit">
+        <div class="absolute -inset-2 rounded-[2rem] bg-gradient-to-br from-accent via-accent-2 to-violet-mist opacity-40 blur-xl"></div>
+        <div class="glass relative flex h-40 w-40 flex-col items-center justify-center rounded-[1.75rem] sm:h-48 sm:w-48">
+          <svg class="h-14 w-14 text-violet-mist/60" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+          </svg>
+          <span class="mt-2 font-mono text-[10px] uppercase tracking-widest text-text-dim">Photo coming soon</span>
         </div>
-      ))}
+        <span class="glass absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-4 py-1.5 font-mono text-xs text-accent-soft">
+          BS Data Science &middot; '27
+        </span>
+      </div>
     </div>
   </section>
 
-  <!-- Featured Projects -->
-  <section class="mx-auto max-w-5xl px-6 py-24">
-    <div class="reveal mb-12 flex items-end justify-between">
-      <h2 class="font-display text-3xl font-bold text-text sm:text-4xl">
-        Featured <span class="text-gradient-dusk">Work</span>
-      </h2>
-      <a href="/projects" class="hidden text-sm font-medium text-accent-soft hover:text-accent sm:block">
-        View all &rarr;
-      </a>
-    </div>
-    <div class="grid gap-6 sm:grid-cols-2">
-      {projects.filter((p) => p.featured).map((p, i) => (
-        <a
-          href={`/projects#${p.slug}`}
-          class="reveal glass group relative overflow-hidden rounded-2xl p-6 transition-transform hover:-translate-y-1"
-          style={`transition-delay: ${i * 80}ms`}
-        >
-          <div class="flex items-start justify-between">
-            <h3 class="font-display text-xl font-semibold text-text">{p.title}</h3>
-            <span class="rounded-full border border-border px-2 py-0.5 text-xs text-text-dim">{p.status}</span>
-          </div>
-          <p class="mt-3 text-sm text-text-muted">{p.blurb}</p>
-          <div class="mt-4 flex flex-wrap gap-2">
-            {p.tech.slice(0, 4).map((t) => (
-              <span class="text-xs text-accent-soft">{t}</span>
-            ))}
-          </div>
-        </a>
+  <!-- Skills marquee -->
+  <div class="relative overflow-hidden border-y border-border py-4">
+    <div class="marquee flex w-max gap-8">
+      {marqueeSkills.map((skill) => (
+        <span class="font-mono text-sm text-text-dim">{skill}</span>
       ))}
     </div>
-  </section>
+  </div>
 
-  <!-- Core Values -->
-  <section class="mx-auto max-w-5xl px-6 py-24">
-    <div class="reveal mb-12 text-center">
-      <h2 class="font-display text-3xl font-bold text-text sm:text-4xl">
-        How I <span class="text-gradient-dusk">Work</span>
-      </h2>
+  <!-- About -->
+  <section id="about" class="mx-auto max-w-3xl px-6 py-24">
+    <p class="reveal font-mono text-sm text-accent-soft">01 / ABOUT</p>
+    <h2 class="reveal mt-3 font-display text-3xl font-bold text-text sm:text-4xl">
+      A sideways path into AI research.
+    </h2>
+
+    <div class="reveal prose-invert mt-8 space-y-5 text-base leading-relaxed text-text-muted">
+      <p>
+        I didn't start out planning to work in artificial intelligence. I completed pre-medical secondary
+        education with a distinction in Biology, expecting to study medicine — the move into Data Science
+        that followed was neither planned nor smooth, and my first years of the degree show it.
+      </p>
+      <p>
+        What matters more to me than that early record is what came after: as I built confidence in
+        programming and quantitative reasoning, my academic performance recovered and then strengthened
+        considerably. That recovery coincided with the point I stopped treating AI as a subject to pass and
+        started treating it as a set of open problems — specifically, what happens to a model once it
+        leaves the clean conditions of a benchmark.
+      </p>
     </div>
-    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+
+    <div class="reveal mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
       {coreValues.map((v, i) => (
-        <div class="reveal glass rounded-2xl p-6 text-center" style={`transition-delay: ${i * 80}ms`}>
-          <div class="mx-auto flex h-10 w-10 items-center justify-center rounded-full border border-accent/30 text-lg text-accent">
+        <div class="glass rounded-2xl p-5" style={`transition-delay:${i * 60}ms`}>
+          <div class="flex h-9 w-9 items-center justify-center rounded-full border border-accent/30 text-accent">
             {v.icon}
           </div>
-          <h3 class="mt-4 font-display text-sm font-semibold text-text">{v.name}</h3>
-          <p class="mt-2 text-xs leading-relaxed text-text-muted">{v.description}</p>
+          <h3 class="mt-3 font-display text-sm font-semibold text-text">{v.name}</h3>
+          <p class="mt-1.5 text-xs leading-relaxed text-text-muted">{v.description}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-14 grid gap-10 sm:grid-cols-2">
+      <div>
+        <h3 class="reveal font-display text-lg font-semibold text-text">Education</h3>
+        <div class="mt-5 space-y-5 border-l border-border pl-5">
+          {education.map((e) => (
+            <div class="reveal relative">
+              <span class="absolute -left-[23px] top-1.5 h-2 w-2 rounded-full bg-accent"></span>
+              <p class="font-mono text-[11px] uppercase tracking-wide text-text-dim">{e.period}</p>
+              <h4 class="mt-1 font-display text-sm font-semibold text-text">{e.degree}</h4>
+              <p class="text-xs text-accent-soft">{e.institution}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div>
+        <h3 class="reveal font-display text-lg font-semibold text-text">Teaching &amp; Mentorship</h3>
+        <div class="mt-5 space-y-5 border-l border-border pl-5">
+          {teaching.map((t) => (
+            <div class="reveal relative">
+              <span class="absolute -left-[23px] top-1.5 h-2 w-2 rounded-full bg-accent-2"></span>
+              <p class="font-mono text-[11px] uppercase tracking-wide text-text-dim">{t.period}</p>
+              <h4 class="mt-1 font-display text-sm font-semibold text-text">{t.role}</h4>
+              <p class="text-xs text-accent-soft">{t.org}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects" class="mx-auto max-w-5xl px-6 py-24">
+    <p class="reveal font-mono text-sm text-accent-soft">02 / PROJECTS</p>
+    <h2 class="reveal mt-3 font-display text-3xl font-bold text-text sm:text-4xl">
+      Systems, not just models.
+    </h2>
+    <p class="reveal mt-4 max-w-2xl text-text-muted">
+      From research prototypes to production-facing platforms — the common thread is testing whether an
+      idea holds up once real users and messy data get involved.
+    </p>
+
+    <div class="mt-12 space-y-6">
+      {projects.map((p, i) => (
+        <article id={p.slug} class="reveal glass scroll-mt-28 rounded-2xl p-6 sm:p-8" style={`transition-delay:${i * 60}ms`}>
+          <div class="flex flex-col gap-6 sm:flex-row sm:items-start">
+            {p.image && (
+              <img src={p.image} alt={p.title} width="160" height="160" loading="lazy" class="h-28 w-28 flex-shrink-0 rounded-xl object-cover sm:h-32 sm:w-32" />
+            )}
+            <div class="flex-1">
+              <div class="flex flex-wrap items-center gap-3">
+                <h3 class="font-display text-2xl font-semibold text-text">{p.title}</h3>
+                <span class={`rounded-full border px-2.5 py-0.5 text-xs ${statusColor[p.status]}`}>{p.status}</span>
+              </div>
+              <p class="mt-3 text-sm leading-relaxed text-text-muted sm:text-base">{p.description}</p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                {p.tech.map((t) => (
+                  <span class="rounded-full border border-border bg-surface-2/50 px-3 py-1 text-xs text-text-muted">{t}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- Research -->
+  <section id="research" class="mx-auto max-w-3xl px-6 py-24">
+    <p class="reveal font-mono text-sm text-accent-soft">03 / RESEARCH</p>
+    <h2 class="reveal mt-3 font-display text-3xl font-bold text-text sm:text-4xl">
+      Making AI systems trustworthy.
+    </h2>
+    <p class="reveal mt-4 text-text-muted">
+      My research centers on one question: what makes an intelligent system dependable once the conditions
+      it operates under are far less controlled than the ones it was trained and evaluated on.
+    </p>
+
+    <div class="reveal mt-6 flex flex-wrap gap-2">
+      {researchInterests.map((r) => (
+        <span class="rounded-full border border-accent/30 bg-accent/5 px-3 py-1.5 text-sm text-accent-soft">{r}</span>
+      ))}
+    </div>
+
+    <div class="mt-10 space-y-5">
+      {publications.map((pub, i) => (
+        <div class="reveal glass rounded-2xl p-6" style={`transition-delay:${i * 60}ms`}>
+          <div class="flex items-start justify-between gap-4">
+            <h3 class="font-display text-lg font-semibold leading-snug text-text">{pub.title}</h3>
+            <span class:list={["flex-shrink-0 rounded-full border px-2.5 py-0.5 text-xs", pub.status === "Published" ? "border-violet-mist/40 text-violet-mist" : "border-accent-2/40 text-accent-2"]}>
+              {pub.status}
+            </span>
+          </div>
+          <p class="mt-2 text-sm text-text-muted">{pub.authors}</p>
+          <p class="mt-1 text-sm text-text-dim">{pub.venue} &middot; {pub.year}</p>
         </div>
       ))}
     </div>
   </section>
+
+  <!-- Contact -->
+  <section id="contact" class="mx-auto max-w-2xl px-6 py-24">
+    <p class="reveal font-mono text-sm text-accent-soft">04 / CONTACT</p>
+    <h2 class="reveal mt-3 font-display text-3xl font-bold text-text sm:text-4xl">Let's talk.</h2>
+    <p class="reveal mt-4 text-text-muted">
+      Research collaboration, project ideas, or opportunities — send a message and I'll get back to you.
+    </p>
+
+    <form
+      name="contact"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      action="/thank-you"
+      class="reveal glass mt-10 space-y-5 rounded-2xl p-6 sm:p-8"
+    >
+      <input type="hidden" name="form-name" value="contact" />
+      <p class="hidden"><label>Don't fill this out: <input name="bot-field" /></label></p>
+
+      <div>
+        <label for="name" class="mb-1.5 block text-sm font-medium text-text">Name</label>
+        <input id="name" name="name" type="text" required class="w-full rounded-lg border border-border bg-surface-2/60 px-4 py-2.5 text-text placeholder:text-text-dim focus:border-accent focus:outline-none" placeholder="Your name" />
+      </div>
+      <div>
+        <label for="email" class="mb-1.5 block text-sm font-medium text-text">Email</label>
+        <input id="email" name="email" type="email" required class="w-full rounded-lg border border-border bg-surface-2/60 px-4 py-2.5 text-text placeholder:text-text-dim focus:border-accent focus:outline-none" placeholder="you@example.com" />
+      </div>
+      <div>
+        <label for="message" class="mb-1.5 block text-sm font-medium text-text">Message</label>
+        <textarea id="message" name="message" rows="5" required class="w-full rounded-lg border border-border bg-surface-2/60 px-4 py-2.5 text-text placeholder:text-text-dim focus:border-accent focus:outline-none" placeholder="What would you like to talk about?"></textarea>
+      </div>
+      <button type="submit" class="w-full rounded-full bg-accent px-7 py-3 font-medium text-void transition-all hover:-translate-y-0.5 hover:bg-accent-soft sm:w-auto">
+        Send Message
+      </button>
+    </form>
+
+    <p class="reveal mt-8 text-sm text-text-dim">
+      Prefer email? Reach me directly at
+      <a href={`mailto:${profile.email}`} class="text-accent-soft underline underline-offset-4 hover:text-accent">{profile.email}</a>
+    </p>
+  </section>
 </Layout>
+
+<style>
+  .marquee {
+    animation: marquee 40s linear infinite;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee { animation: none; }
+  }
+</style>

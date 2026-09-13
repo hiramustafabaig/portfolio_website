@@ -1,65 +1,64 @@
 ---
 const navItems = [
-  { name: "Home", path: "/" },
-  { name: "About", path: "/about" },
-  { name: "Projects", path: "/projects" },
-  { name: "Research", path: "/research" },
-  { name: "Blogs", path: "/blogs" },
-  { name: "Contact", path: "/contact" },
+  { name: "About", href: "#about" },
+  { name: "Projects", href: "#projects" },
+  { name: "Research", href: "#research" },
+  { name: "Contact", href: "#contact" },
 ];
-const current = Astro.url.pathname;
 ---
 
 <header class="fixed top-0 inset-x-0 z-50">
   <nav class="glass mx-auto mt-4 flex max-w-5xl items-center justify-between rounded-2xl px-5 py-3 sm:px-6">
-    <a href="/" class="font-display text-lg font-semibold tracking-tight text-text">
+    <a href="#top" class="font-display text-lg font-semibold tracking-tight text-text">
       Hira<span class="text-accent">.</span>
     </a>
 
     <ul class="hidden items-center gap-1 md:flex">
       {navItems.map((item) => (
         <li>
-          <a
-            href={item.path}
-            class:list={[
-              "rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-              current === item.path
-                ? "text-accent"
-                : "text-text-muted hover:text-text",
-            ]}
-          >
+          <a href={item.href} class="rounded-lg px-3 py-2 text-sm font-medium text-text-muted transition-colors hover:text-text">
             {item.name}
           </a>
         </li>
       ))}
     </ul>
 
-    <button
-      id="nav-toggle"
-      aria-label="Toggle menu"
-      aria-expanded="false"
-      class="flex h-9 w-9 items-center justify-center rounded-lg text-text md:hidden"
-    >
-      <svg id="nav-icon-open" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-      <svg id="nav-icon-close" xmlns="http://www.w3.org/2000/svg" class="hidden h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-      </svg>
-    </button>
+    <div class="flex items-center gap-2">
+      <button
+        id="theme-toggle"
+        aria-label="Toggle light and dark theme"
+        class="theme-btn flex h-9 w-9 items-center justify-center rounded-full border border-border text-text transition-colors hover:border-accent"
+      >
+        <svg class="theme-icon-sun h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="4" />
+          <path stroke-linecap="round" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+        </svg>
+        <svg class="theme-icon-moon h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 1020.354 15.354z" />
+        </svg>
+      </button>
+
+      <button
+        id="nav-toggle"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        class="flex h-9 w-9 items-center justify-center rounded-lg text-text md:hidden"
+      >
+        <svg id="nav-icon-open" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <svg id="nav-icon-close" xmlns="http://www.w3.org/2000/svg" class="hidden h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
   </nav>
 
   <div id="nav-mobile" class="glass mx-4 mt-2 hidden max-w-5xl rounded-2xl p-2 md:hidden">
     <ul class="flex flex-col">
       {navItems.map((item) => (
         <li>
-          <a
-            href={item.path}
-            class:list={[
-              "block rounded-lg px-4 py-3 text-sm font-medium",
-              current === item.path ? "text-accent" : "text-text-muted",
-            ]}
-          >
+          <a href={item.href} class="block rounded-lg px-4 py-3 text-sm font-medium text-text-muted">
             {item.name}
           </a>
         </li>
@@ -67,6 +66,18 @@ const current = Astro.url.pathname;
     </ul>
   </div>
 </header>
+
+<style>
+  .theme-icon-moon {
+    display: none;
+  }
+  :global(:root.light) .theme-icon-sun {
+    display: none;
+  }
+  :global(:root.light) .theme-icon-moon {
+    display: block;
+  }
+</style>
 
 <script>
   const toggle = document.getElementById("nav-toggle");

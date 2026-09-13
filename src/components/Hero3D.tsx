@@ -1,11 +1,8 @@
-import { useMemo, useRef } from "react";
-import { Canvas, useFrame, type ThreeElements } from "@react-three/fiber";
+import { useRef, useState, useMemo } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { MeshDistortMaterial, Float } from "@react-three/drei";
 import * as THREE from "three";
 
-/**
- * Seeded PRNG so the ridge silhouettes are stable across reloads
- * instead of reshuffling every time the hero mounts.
- */
 function mulberry32(seed: number) {
   return function () {
     seed |= 0;
@@ -16,67 +13,101 @@ function mulberry32(seed: number) {
   };
 }
 
-function ridgeShape(rng: () => number, width: number, baseHeight: number, jaggedness: number) {
-  const shape = new THREE.Shape();
-  const segments = 14;
-  const points: [number, number][] = [];
-  for (let i = 0; i <= segments; i++) {
-    const x = -width / 2 + (width * i) / segments;
-    const peak = baseHeight + (rng() - 0.35) * jaggedness;
-    points.push([x, Math.max(peak, baseHeight * 0.35)]);
-  }
-  shape.moveTo(-width / 2, -6);
-  points.forEach(([x, y], i) => (i === 0 ? shape.lineTo(x, y) : shape.lineTo(x, y)));
-  shape.lineTo(width / 2, -6);
-  shape.closePath();
-  return shape;
-}
-
-function Ridge({
-  z,
-  color,
-  baseHeight,
-  jaggedness,
-  seed,
-  parallax,
-  factor,
-  yOffset,
-}: {
-  z: number;
-  color: string;
-  baseHeight: number;
-  jaggedness: number;
-  seed: number;
-  parallax: React.MutableRefObject<{ x: number; y: number }>;
-  factor: number;
-  yOffset: number;
-}) {
+function CoreBlob({ reducedMotion }: { reducedMotion: boolean }) {
   const mesh = useRef<THREE.Mesh>(null);
-  const shape = useMemo(() => ridgeShape(mulberry32(seed), 30, baseHeight, jaggedness), [seed, baseHeight, jaggedness]);
+  const [hovered, setHovered] = useState(false);
+  const scaleRef = useRef(1);
 
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!mesh.current) return;
-    const target = parallax.current;
-    mesh.current.position.x = THREE.MathUtils.lerp(mesh.current.position.x, target.x * factor, 0.04);
-    mesh.current.position.y = THREE.MathUtils.lerp(mesh.current.position.y, yOffset + target.y * factor * 0.5, 0.04);
+    if (!reducedMotion) mesh.current.rotation.y += delta * 0.12;
+    const target = hovered ? 1.16 : 1;
+    scaleRef.current = THREE.MathUtils.lerp(scaleRef.current, target, 0.08);
+    mesh.current.scale.setScalar(scaleRef.current);
   });
 
   return (
-    <mesh ref={mesh} position={[0, yOffset, z]}>
-      <shapeGeometry args={[shape]} />
-      <meshBasicMaterial color={color} side={THREE.DoubleSide} />
+    <mesh
+      ref={mesh}
+      onPointerOver={() => setHovered(true)}
+      onPointerOut={() => setHovered(false)}
+    >
+      <icosahedronGeometry args={[0.5, 4]} />
+      <MeshDistortMaterial
+        color={hovered ? "#c084e8" : "#a855d6"}
+        emissive="#5b2f8c"
+        emissiveIntensity={hovered ? 0.9 : 0.5}
+        roughness={0.25}
+        metalness={0.3}
+        distort={hovered ? 0.4 : 0.25}
+        speed={reducedMotion ? 0 : hovered ? 3 : 1.4}
+      />
     </mesh>
   );
 }
 
-function Stars({ count = 140 }: { count?: number }) {
+function Orbiter({
+  radius,
+  speed,
+  offset,
+  size,
+  shape,
+  color,
+  reducedMotion,
+}: {
+  radius: number;
+  speed: number;
+  offset: number;
+  size: number;
+  shape: "octahedron" | "torus" | "tetrahedron";
+  color: string;
+  reducedMotion: boolean;
+}) {
+  const group = useRef<THREE.Group>(null);
+  const mesh = useRef<THREE.Mesh>(null);
+  const [hovered, setHovered] = useState(false);
+  const scaleRef = useRef(1);
+
+  useFrame(({ clock }, delta) => {
+    if (!group.current || !mesh.current) return;
+    if (!reducedMotion) {
+      const t = clock.elapsedTime * speed + offset;
+      group.current.position.set(Math.cos(t) * radius, Math.sin(t * 0.7) * radius * 0.4, Math.sin(t) * radius);
+      mesh.current.rotation.x += delta * (hovered ? 1.6 : 0.5);
+      mesh.current.rotation.y += delta * (hovered ? 1.6 : 0.5);
+    }
+    const target = hovered ? 1.4 : 1;
+    scaleRef.current = THREE.MathUtils.lerp(scaleRef.current, target, 0.1);
+    mesh.current.scale.setScalar(scaleRef.current);
+  });
+
+  return (
+    <group ref={group}>
+      <mesh ref={mesh} onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)}>
+        {shape === "octahedron" && <octahedronGeometry args={[size, 0]} />}
+        {shape === "torus" && <torusGeometry args={[size, size * 0.35, 12, 32]} />}
+        {shape === "tetrahedron" && <tetrahedronGeometry args={[size, 0]} />}
+        <meshStandardMaterial
+          color={color}
+          emissive={color}
+          emissiveIntensity={hovered ? 0.8 : 0.3}
+          roughness={0.35}
+          metalness={0.4}
+          wireframe={!hovered}
+        />
+      </mesh>
+    </group>
+  );
+}
+
+function Stars({ count = 160 }: { count?: number }) {
   const positions = useMemo(() => {
     const rng = mulberry32(7);
     const arr = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
-      arr[i * 3] = (rng() - 0.5) * 34;
-      arr[i * 3 + 1] = rng() * 9 + 1;
-      arr[i * 3 + 2] = -10 - rng() * 6;
+      arr[i * 3] = (rng() - 0.5) * 30;
+      arr[i * 3 + 1] = (rng() - 0.5) * 18;
+      arr[i * 3 + 2] = -6 - rng() * 10;
     }
     return arr;
   }, [count]);
@@ -85,7 +116,7 @@ function Stars({ count = 140 }: { count?: number }) {
   useFrame(({ clock }) => {
     if (!ref.current) return;
     const mat = ref.current.material as THREE.PointsMaterial;
-    mat.opacity = 0.4 + Math.sin(clock.elapsedTime * 0.6) * 0.2;
+    mat.opacity = 0.35 + Math.sin(clock.elapsedTime * 0.5) * 0.15;
   });
 
   return (
@@ -93,44 +124,34 @@ function Stars({ count = 140 }: { count?: number }) {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial color="#f7f3ee" size={0.05} transparent opacity={0.5} sizeAttenuation />
+      <pointsMaterial color="#c9b8e0" size={0.045} transparent opacity={0.4} sizeAttenuation />
     </points>
   );
 }
 
-function Sun({ parallax }: { parallax: React.MutableRefObject<{ x: number; y: number }> }) {
-  const mesh = useRef<THREE.Mesh>(null);
-  useFrame(({ clock }) => {
-    if (!mesh.current) return;
-    const mat = mesh.current.material as THREE.MeshBasicMaterial;
-    mat.opacity = 0.85 + Math.sin(clock.elapsedTime * 0.8) * 0.08;
-    const x = 6.8 + parallax.current.x * 0.4;
-    mesh.current.position.x = THREE.MathUtils.lerp(mesh.current.position.x, x, 0.03);
-  });
-  return (
-    <mesh ref={mesh} position={[6.8, -4.4, -9.2]}>
-      <circleGeometry args={[0.85, 48]} />
-      <meshBasicMaterial color="#ffdfa8" transparent opacity={0.9} depthWrite={false} />
-    </mesh>
-  );
-}
-
 function Scene({ reducedMotion }: { reducedMotion: boolean }) {
-  const parallax = useRef({ x: 0, y: 0 });
+  const group = useRef<THREE.Group>(null);
 
   useFrame(({ pointer }) => {
-    if (reducedMotion) return;
-    parallax.current.x = pointer.x;
-    parallax.current.y = pointer.y;
+    if (reducedMotion || !group.current) return;
+    group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, pointer.x * 0.35, 0.04);
+    group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, -pointer.y * 0.2, 0.04);
   });
 
   return (
     <>
+      <ambientLight intensity={0.5} />
+      <pointLight position={[5, 5, 5]} intensity={14} color="#c084e8" />
+      <pointLight position={[-5, -3, -5]} intensity={9} color="#7b7fd1" />
       <Stars />
-      <Sun parallax={parallax} />
-      <Ridge z={-6} seed={11} baseHeight={1.6} jaggedness={0.9} color="#6f93b8" parallax={parallax} factor={0.25} yOffset={-5.4} />
-      <Ridge z={-3.5} seed={23} baseHeight={1.1} jaggedness={1.2} color="#2f5c94" parallax={parallax} factor={0.45} yOffset={-6.2} />
-      <Ridge z={-1} seed={41} baseHeight={0.6} jaggedness={1.5} color="#152238" parallax={parallax} factor={0.7} yOffset={-7} />
+      <group ref={group} position={[2, -1.8, -3]}>
+        <Float speed={reducedMotion ? 0 : 1.4} rotationIntensity={0.3} floatIntensity={0.6}>
+          <CoreBlob reducedMotion={reducedMotion} />
+        </Float>
+        <Orbiter radius={1.1} speed={0.35} offset={0} size={0.1} shape="octahedron" color="#7b7fd1" reducedMotion={reducedMotion} />
+        <Orbiter radius={0.9} speed={0.5} offset={2.1} size={0.08} shape="torus" color="#c084e8" reducedMotion={reducedMotion} />
+        <Orbiter radius={1.35} speed={0.28} offset={4.2} size={0.09} shape="tetrahedron" color="#9b85c9" reducedMotion={reducedMotion} />
+      </group>
     </>
   );
 }
@@ -144,7 +165,7 @@ export default function Hero3D() {
       <Canvas
         dpr={[1, 1.5]}
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-        camera={{ position: [0, 0, 10], fov: 45 }}
+        camera={{ position: [0, 0, 8], fov: 45 }}
         frameloop={reducedMotion ? "demand" : "always"}
       >
         <Scene reducedMotion={reducedMotion} />
