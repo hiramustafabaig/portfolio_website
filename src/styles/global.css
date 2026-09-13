@@ -5,26 +5,26 @@
 @import "@fontsource-variable/inter";
 
 @theme {
-  /* ---- Violet/wisteria palette — dark is the default theme ---- */
+  /* ---- Editorial palette: Blood Red / Whispy Blue / Buttercream — dark is the default theme ---- */
 
-  --color-void: #0b0714;
-  --color-bg: #120b1f;
-  --color-surface: #1b1230;
-  --color-surface-2: #271a42;
-  --color-border: #3a2a5c;
+  --color-void: #050303;
+  --color-bg: #100809;
+  --color-surface: #1c1112;
+  --color-surface-2: #2a1718;
+  --color-border: #3d2124;
 
-  --color-violet-deep: #2e1f52;
-  --color-violet: #5b3e8c;
-  --color-violet-mist: #9b85c9;
-  --color-violet-pale: #c9b8e0;
+  --color-ink: #2a1013;
+  --color-steel: #526078;
+  --color-mist: #93a0b8;
+  --color-pale: #cbd7e5;
 
-  --color-accent: #a855d6;
-  --color-accent-2: #7b7fd1;
-  --color-accent-soft: #c084e8;
+  --color-accent: #9c2c3d;
+  --color-accent-2: #93a8c9;
+  --color-accent-soft: #efe3cb;
 
-  --color-text: #f3ecfb;
-  --color-text-muted: #b3a0c9;
-  --color-text-dim: #6e5e89;
+  --color-text: #f5eee0;
+  --color-text-muted: #b8ab97;
+  --color-text-dim: #6e5f57;
 
   --font-display: "Space Grotesk Variable", "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Space Grotesk Variable", ui-monospace, monospace;
@@ -48,28 +48,28 @@
   }
 }
 
-/* Light theme override — same custom properties, repainted for a pale lilac surface.
+/* Light theme override — same custom properties, repainted for a Buttercream surface.
    Everything built on the @theme tokens above (bg-bg, text-text, .glass, etc.)
    repaints automatically since Tailwind v4 utilities reference these as var(...). */
 :root.light {
   --color-void: #ffffff;
-  --color-bg: #f7f2fb;
-  --color-surface: #efe4f6;
-  --color-surface-2: #e4d3f0;
-  --color-border: #d8c3e8;
+  --color-bg: #f6ecd9;
+  --color-surface: #efe2c8;
+  --color-surface-2: #e6d4ae;
+  --color-border: #d6c19a;
 
-  --color-violet-deep: #c9b8e0;
-  --color-violet: #9b85c9;
-  --color-violet-mist: #7b6a9c;
-  --color-violet-pale: #5b3e8c;
+  --color-ink: #cbd7e5;
+  --color-steel: #7c8ba5;
+  --color-mist: #5c6f8f;
+  --color-pale: #526078;
 
-  --color-accent: #7c3aa0;
-  --color-accent-2: #6c63b5;
-  --color-accent-soft: #9b5dc7;
+  --color-accent: #7a212f;
+  --color-accent-2: #4f6288;
+  --color-accent-soft: #9c2c3d;
 
-  --color-text: #2b1f3d;
-  --color-text-muted: #5e4c78;
-  --color-text-dim: #8574a0;
+  --color-text: #241412;
+  --color-text-muted: #5c4c3f;
+  --color-text-dim: #8a7a68;
 
   color-scheme: light;
 }
@@ -93,20 +93,20 @@
 
   ::selection {
     background: var(--color-accent);
-    color: var(--color-void);
+    color: var(--color-text);
   }
 
   /* Slim, on-theme scrollbar (Firefox + WebKit) */
   * {
     scrollbar-width: thin;
-    scrollbar-color: var(--color-violet) transparent;
+    scrollbar-color: var(--color-steel) transparent;
   }
   *::-webkit-scrollbar {
     width: 8px;
     height: 8px;
   }
   *::-webkit-scrollbar-thumb {
-    background: var(--color-violet);
+    background: var(--color-steel);
     border-radius: 999px;
   }
 
@@ -133,7 +133,7 @@
     background: color-mix(in srgb, var(--color-surface) 70%, transparent);
     backdrop-filter: blur(16px) saturate(140%);
     -webkit-backdrop-filter: blur(16px) saturate(140%);
-    border: 1px solid color-mix(in srgb, var(--color-violet-pale) 14%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-pale) 14%, transparent);
   }
 
   .text-gradient {
@@ -151,5 +151,54 @@
   .reveal.is-visible {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  /* Spotlight-border card: a soft cursor-tracked highlight plus a gradient
+     border that only appears on hover — the "not-a-conventional-card" treatment. */
+  .spot-card {
+    position: relative;
+    isolation: isolate;
+    --spot-x: 50%;
+    --spot-y: 50%;
+  }
+  .spot-card::before,
+  .spot-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+  }
+  .spot-card::before {
+    z-index: 0;
+    background: radial-gradient(
+      480px circle at var(--spot-x) var(--spot-y),
+      color-mix(in srgb, var(--color-accent-soft) 14%, transparent),
+      transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .spot-card::after {
+    z-index: 1;
+    padding: 1px;
+    background: radial-gradient(
+      280px circle at var(--spot-x) var(--spot-y),
+      color-mix(in srgb, var(--color-accent-soft) 70%, transparent),
+      transparent 65%
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .spot-card:hover::before,
+  .spot-card:hover::after {
+    opacity: 1;
+  }
+  .spot-card > * {
+    position: relative;
+    z-index: 2;
   }
 }

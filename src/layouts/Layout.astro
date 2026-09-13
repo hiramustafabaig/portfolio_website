@@ -51,6 +51,21 @@ const { title, description, path } = Astro.props;
         const isLight = document.documentElement.classList.toggle("light");
         localStorage.setItem("theme", isLight ? "light" : "dark");
       });
+
+      // Cursor-tracked spotlight for `.spot-card` elements — cheap CSS custom
+      // property updates, no per-card JS listeners needed.
+      let spotRaf = 0;
+      document.addEventListener("pointermove", (e) => {
+        if (spotRaf) return;
+        spotRaf = requestAnimationFrame(() => {
+          spotRaf = 0;
+          const el = document.elementFromPoint(e.clientX, e.clientY)?.closest(".spot-card");
+          if (!(el instanceof HTMLElement)) return;
+          const rect = el.getBoundingClientRect();
+          el.style.setProperty("--spot-x", `${e.clientX - rect.left}px`);
+          el.style.setProperty("--spot-y", `${e.clientY - rect.top}px`);
+        });
+      });
     </script>
   </body>
 </html>
