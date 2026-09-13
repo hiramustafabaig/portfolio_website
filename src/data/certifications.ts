@@ -22,12 +22,3 @@ export const activities: Activity[] = [
   { role: "Design Team Member", org: "Data Science Society, COMSATS University Islamabad", period: "2025" },
   { role: "Event Management Co-Head", org: "Hult Prize Foundation & Industrial Liaison Cell", period: "2025" },
 ];
-
-export const hobbies: string[] = [
-  "Photography & Videography",
-  "Reading",
-  "Hiking",
-  "Cooking",
-  "Traveling",
-  "Chess",
-];

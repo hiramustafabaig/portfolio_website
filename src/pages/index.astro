@@ -6,7 +6,7 @@ import { profile, coreValues } from "../data/profile";
 import { skillGroups } from "../data/skills";
 import { education, experience } from "../data/education";
 import { publications, researchInterests } from "../data/research";
-import { certifications, activities, hobbies } from "../data/certifications";
+import { certifications, activities } from "../data/certifications";
 
 const allSkills = skillGroups.flatMap((g) => g.items);
 const marqueeSkills = [...allSkills, ...allSkills];
@@ -61,10 +61,10 @@ const marqueeSkills = [...allSkills, ...allSkills];
            never passes through the glass sphere's refraction/blur — reads as
            "sitting on the bubble" while staying perfectly crisp. -->
       <div class="reveal relative mx-auto w-fit lg:mx-0 lg:ml-auto">
-        <div class="absolute -inset-6 rounded-full bg-gradient-to-br from-accent/45 via-accent-2/30 to-transparent blur-3xl"></div>
+        <div class="absolute -inset-6 rounded-full bg-accent-soft/40 blur-3xl"></div>
         <div
           class="relative h-64 w-64 rounded-full p-[3px] shadow-[0_25px_70px_-20px_rgba(0,0,0,0.6)] sm:h-72 sm:w-72 lg:h-80 lg:w-80"
-          style="background: linear-gradient(135deg, var(--color-accent-soft), var(--color-accent) 45%, var(--color-accent-2));"
+          style="background: linear-gradient(135deg, #f4ead9, var(--color-accent-soft) 55%, #dcc9ac);"
         >
           <div class="h-full w-full overflow-hidden rounded-full ring-4 ring-bg/50">
             <img
@@ -225,12 +225,30 @@ const marqueeSkills = [...allSkills, ...allSkills];
               <div class="flex-1">
                 <div class="flex flex-wrap items-start justify-between gap-3">
                   <h3 class="font-display text-xl font-semibold leading-snug text-text">{pub.title}</h3>
-                  <span class:list={["flex-shrink-0 rounded-full border px-2.5 py-0.5 text-xs", pub.status === "Published" ? "border-mist/40 text-mist" : "border-accent-2/40 text-accent-2"]}>
+                  <span
+                    class:list={[
+                      "flex-shrink-0 rounded-full px-3 py-1 text-xs font-semibold tracking-wide",
+                      pub.status === "Published" ? "bg-mist text-void" : "bg-accent text-void",
+                    ]}
+                  >
                     {pub.status}
                   </span>
                 </div>
-                <p class="mt-3 text-sm text-text-muted">{pub.authors}</p>
-                <p class="mt-1 font-mono text-xs uppercase tracking-wide text-text-dim">{pub.venue} &middot; {pub.year}</p>
+                <p class="mt-3 text-sm text-mist">{pub.authors}</p>
+                <p class="mt-1 font-mono text-xs uppercase tracking-wide text-mist/80">{pub.venue} &middot; {pub.year}</p>
+                {pub.href && (
+                  <a
+                    href={pub.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-accent-soft underline underline-offset-4 hover:text-accent"
+                  >
+                    View on Google Scholar
+                    <svg class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </a>
+                )}
               </div>
             </div>
           </div>
@@ -267,10 +285,13 @@ const marqueeSkills = [...allSkills, ...allSkills];
         <div class="grid gap-10 lg:grid-cols-2">
           <div>
             <h3 class="font-display text-lg font-semibold text-text">Certifications</h3>
-            <div class="mt-5 space-y-3">
-              {certifications.map((c) => (
-                <div class="flex items-center gap-3 rounded-xl border border-border bg-surface-2/40 px-4 py-3 transition-colors duration-300 hover:bg-surface-2/70">
-                  <span class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
+            <div class="mt-5 space-y-4">
+              {certifications.map((c, i) => (
+                <div
+                  class="spot-card reveal-pop group relative flex items-center gap-3 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-surface-2/80 to-surface/50 px-5 py-4 shadow-[0_15px_40px_-22px_rgba(0,0,0,0.7)] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.75)]"
+                  style={`transition-delay:${i * 70}ms`}
+                >
+                  <span class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
                     <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -285,10 +306,13 @@ const marqueeSkills = [...allSkills, ...allSkills];
           </div>
           <div>
             <h3 class="font-display text-lg font-semibold text-text">Leadership &amp; Activities</h3>
-            <div class="mt-5 space-y-3">
-              {activities.map((a) => (
-                <div class="flex items-center gap-3 rounded-xl border border-border bg-surface-2/40 px-4 py-3 transition-colors duration-300 hover:bg-surface-2/70">
-                  <span class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-accent-2/15 text-accent-2">
+            <div class="mt-5 space-y-4">
+              {activities.map((a, i) => (
+                <div
+                  class="spot-card reveal-pop group relative flex items-center gap-3 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-surface-2/80 to-surface/50 px-5 py-4 shadow-[0_15px_40px_-22px_rgba(0,0,0,0.7)] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.75)]"
+                  style={`transition-delay:${i * 70}ms`}
+                >
+                  <span class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-accent-2/15 text-accent-2">
                     <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
                     </svg>
@@ -301,12 +325,6 @@ const marqueeSkills = [...allSkills, ...allSkills];
               ))}
             </div>
           </div>
-        </div>
-
-        <div class="mt-10 flex flex-wrap gap-2 border-t border-white/5 pt-8">
-          {hobbies.map((h) => (
-            <span class="rounded-full border border-border bg-surface-2/50 px-3 py-1 text-xs text-text-muted">{h}</span>
-          ))}
         </div>
       </div>
     </div>
@@ -321,10 +339,11 @@ const marqueeSkills = [...allSkills, ...allSkills];
         Research collaboration, project ideas, or opportunities — reach out through any of these.
       </p>
 
-      <!-- Social bar: always dark, regardless of the section's own light/dark banding -->
+      <!-- Social bar: always the dark theme's maroon tones, regardless of the
+           section's own light/dark banding -->
       <div
         class="reveal mx-auto mt-10 flex w-fit items-center justify-center gap-6 rounded-full border border-white/10 px-8 py-5 shadow-lg"
-        style="background: linear-gradient(135deg, #2a0f13 0%, #1a0a0d 55%, #2a0f13 100%);"
+        style="background: linear-gradient(135deg, #6d2932 0%, #561c24 55%, #6d2932 100%);"
       >
         <a
           href={profile.social.github}
@@ -358,11 +377,6 @@ const marqueeSkills = [...allSkills, ...allSkills];
           </svg>
         </a>
       </div>
-
-      <p class="reveal mt-8 text-sm text-text-dim">
-        Prefer email? Reach me directly at
-        <a href={`mailto:${profile.email}`} class="text-accent-soft underline underline-offset-4 hover:text-accent">{profile.email}</a>
-      </p>
     </div>
   </section>
 </Layout>

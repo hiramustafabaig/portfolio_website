@@ -51,6 +51,51 @@ function AbstractVisual({ slug }: { slug: string }) {
       </svg>
     );
   }
+  if (slug === "multi-modal-health-assistant") {
+    return (
+      <svg viewBox="0 0 160 160" className="h-full w-full opacity-80">
+        <polyline
+          points="10,95 40,95 52,58 66,125 80,72 94,95 128,95 150,55"
+          fill="none"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="text-accent-2"
+          stroke="currentColor"
+        />
+        <circle cx="52" cy="58" r="3.5" className="text-accent" fill="currentColor" />
+        <circle cx="66" cy="125" r="3.5" className="text-accent" fill="currentColor" opacity="0.7" />
+        <circle cx="150" cy="55" r="4" className="text-accent-2" fill="currentColor" opacity="0.6" />
+      </svg>
+    );
+  }
+  if (slug === "careerai") {
+    return (
+      <svg viewBox="0 0 160 160" className="h-full w-full opacity-80">
+        <g stroke="currentColor" strokeWidth="1.5" fill="none" className="text-accent-2/60">
+          <path d="M80 132 L80 98" />
+          <path d="M80 98 L46 68" />
+          <path d="M80 98 L114 68" />
+          <path d="M46 68 L26 36" />
+          <path d="M46 68 L61 32" />
+          <path d="M114 68 L99 32" />
+          <path d="M114 68 L134 36" />
+        </g>
+        <g className="text-accent" fill="currentColor">
+          <circle cx="80" cy="132" r="5" />
+          <circle cx="80" cy="98" r="4" />
+        </g>
+        <g className="text-accent-2" fill="currentColor" opacity="0.75">
+          <circle cx="46" cy="68" r="3.5" />
+          <circle cx="114" cy="68" r="3.5" />
+          <circle cx="26" cy="36" r="3" />
+          <circle cx="61" cy="32" r="3" />
+          <circle cx="99" cy="32" r="3" />
+          <circle cx="134" cy="36" r="3" />
+        </g>
+      </svg>
+    );
+  }
   return null;
 }
 

@@ -39,7 +39,6 @@ export const projects: Project[] = [
       "An AI-powered health assessment system combining structured health data with NLP-based symptom analysis to deliver explainable diabetes-risk predictions and personalized recommendations.",
     tech: ["Python", "LangChain", "Streamlit", "NLP"],
     status: "Live",
-    image: "/images/projects/HealthRiskAI.jpg",
     featured: true,
   },
   {
@@ -50,6 +49,5 @@ export const projects: Project[] = [
       "An AI-driven career guidance application analyzing user profiles to recommend personalized career paths, perform skill-gap analysis, and surface relevant learning resources.",
     tech: ["Next.js", "React", "TypeScript", "AI APIs"],
     status: "Live",
-    image: "/images/projects/CareerAI.png",
   },
 ];

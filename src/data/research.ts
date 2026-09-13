@@ -15,6 +15,7 @@ export const publications: Publication[] = [
     venue: "International Journal of Advanced Research, 3(4), 347–371",
     year: "2026",
     status: "Published",
+    href: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=5gVqJzcAAAAJ&citation_for_view=5gVqJzcAAAAJ:u5HHmVD_uO8C",
   },
   {
     authors: "Baig, H., & Dawood, O. B.",
