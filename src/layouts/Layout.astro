@@ -1,0 +1,57 @@
+---
+import "../styles/global.css";
+import BaseHead from "../components/BaseHead.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+}
+
+const { title, description, path } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} path={path} />
+  </head>
+  <body class="min-h-screen bg-bg text-text antialiased">
+    <Nav />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              io.unobserve(entry.target);
+            }
+          }
+        },
+        { threshold: 0.15 }
+      );
+      document.querySelectorAll(".reveal, .reveal-pop").forEach((el) => io.observe(el));
+
+      // Cursor-tracked spotlight for `.spot-card` elements — cheap CSS custom
+      // property updates, no per-card JS listeners needed.
+      let spotRaf = 0;
+      document.addEventListener("pointermove", (e) => {
+        if (spotRaf) return;
+        spotRaf = requestAnimationFrame(() => {
+          spotRaf = 0;
+          const el = document.elementFromPoint(e.clientX, e.clientY)?.closest(".spot-card");
+          if (!(el instanceof HTMLElement)) return;
+          const rect = el.getBoundingClientRect();
+          el.style.setProperty("--spot-x", `${e.clientX - rect.left}px`);
+          el.style.setProperty("--spot-y", `${e.clientY - rect.top}px`);
+        });
+      });
+    </script>
+  </body>
+</html>

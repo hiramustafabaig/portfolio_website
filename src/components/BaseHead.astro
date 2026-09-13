@@ -1,0 +1,49 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+  image?: string;
+}
+
+const { title, description, path = "/", image = "/images/profile/with-bg.jpeg" } = Astro.props;
+const canonicalURL = new URL(path, Astro.site);
+const ogImageURL = new URL(image, Astro.site);
+const siteTitle = title === "Hira Baig" ? title : `${title} · Hira Baig`;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="canonical" href={canonicalURL} />
+<meta name="generator" content={Astro.generator} />
+
+<title>{siteTitle}</title>
+<meta name="description" content={description} />
+<meta name="theme-color" content="#0a1220" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={siteTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImageURL} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={siteTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageURL} />
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Hira Baig",
+  jobTitle: "Data Scientist & AI/ML Engineer",
+  url: Astro.site?.toString(),
+  sameAs: [
+    "https://www.linkedin.com/in/hira-baig-195b13338/",
+    "https://github.com/hiramustafabaig",
+  ],
+})} />

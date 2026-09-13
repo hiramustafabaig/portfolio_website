@@ -1,0 +1,426 @@
+---
+import Layout from "../layouts/Layout.astro";
+import HeroCanvas from "../components/hero/HeroCanvas";
+import ProjectStack from "../components/projects/ProjectStack";
+import { profile, coreValues } from "../data/profile";
+import { skillGroups } from "../data/skills";
+import { education, experience } from "../data/education";
+import { publications, researchInterests } from "../data/research";
+import { certifications, activities } from "../data/certifications";
+
+const allSkills = skillGroups.flatMap((g) => g.items);
+const marqueeSkills = [...allSkills, ...allSkills];
+---
+
+<Layout
+  title="Hira Baig"
+  description="Data Scientist & AI/ML Engineer building trustworthy, explainable AI systems, from published research to production platforms."
+  path="/"
+>
+  <!-- Hero -->
+  <section id="top" class="relative min-h-screen overflow-hidden pt-24">
+    <HeroCanvas client:only="react" />
+    <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-bg via-transparent to-transparent"></div>
+
+    <div class="relative z-10 mx-auto grid min-h-[calc(100vh-6rem)] max-w-6xl grid-cols-1 items-center gap-10 px-6 py-16 lg:grid-cols-[1.05fr_0.95fr]">
+      <!-- Typography, in front of the 3D scene -->
+      <div class="text-center lg:text-left">
+        <p class="reveal font-mono text-sm uppercase tracking-[0.3em] text-accent-soft">
+          Data Science &middot; AI &middot; Research
+        </p>
+        <h1 class="reveal mt-5 font-display text-6xl font-semibold leading-[1.03] tracking-tight text-text sm:text-7xl lg:text-8xl">
+          Hira <span class="text-gradient">Baig</span>
+        </h1>
+        <p class="reveal mx-auto mt-6 max-w-xl text-xl leading-relaxed text-text-muted lg:mx-0">
+          Building intelligent systems through data, machine learning, and research, work built to survive
+          contact with real users, not just a benchmark.
+        </p>
+
+        <div class="reveal mt-10 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
+          <a
+            href="#work"
+            class="rounded-full bg-accent px-7 py-3 font-medium text-void shadow-lg shadow-accent/30 transition-all hover:-translate-y-0.5 hover:bg-accent-soft"
+          >
+            View My Work
+          </a>
+          <a href="#about" class="glass rounded-full px-7 py-3 font-medium text-text transition-all hover:-translate-y-0.5">
+            About Me
+          </a>
+        </div>
+
+        <div class="reveal mt-8 flex items-center justify-center gap-4 text-sm text-text-dim lg:justify-start">
+          <a href={profile.social.github} class="hover:text-accent-soft">GitHub</a>
+          <span>&middot;</span>
+          <a href={profile.social.linkedin} class="hover:text-accent-soft">LinkedIn</a>
+          <span>&middot;</span>
+          <a href={`mailto:${profile.email}`} class="hover:text-accent-soft">Email</a>
+        </div>
+      </div>
+
+      <!-- Portrait: plain sharp <img>, layered on top of the WebGL canvas so it
+           never passes through the glass sphere's refraction/blur — reads as
+           "sitting on the bubble" while staying perfectly crisp. -->
+      <div class="reveal relative mx-auto w-fit lg:mx-0 lg:ml-auto">
+        <div class="absolute -inset-6 rounded-full bg-accent-soft/40 blur-3xl"></div>
+        <div
+          class="relative h-64 w-64 rounded-full p-[3px] shadow-[0_25px_70px_-20px_rgba(0,0,0,0.6)] sm:h-72 sm:w-72 lg:h-80 lg:w-80"
+          style="background: linear-gradient(135deg, #f4ead9, var(--color-accent-soft) 55%, #dcc9ac);"
+        >
+          <div class="h-full w-full overflow-hidden rounded-full ring-4 ring-bg/50">
+            <img
+              src="/images/profile/hira-hero.jpg"
+              alt="Hira Baig"
+              width="800"
+              height="800"
+              class="h-full w-full object-cover"
+            />
+          </div>
+        </div>
+        <span class="glass absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-4 py-1.5 font-mono text-xs text-accent-soft">
+          BS Data Science &middot; '27
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills marquee band -->
+  <div class="relative overflow-hidden border-y border-white/5 bg-void py-4">
+    <div class="marquee flex w-max gap-8">
+      {marqueeSkills.map((skill) => (
+        <span class="font-mono text-sm text-accent-soft/70">{skill}</span>
+      ))}
+    </div>
+  </div>
+
+  <!-- 01 / About -->
+  <section id="about" class="theme-light relative bg-bg px-6 py-24 lg:px-12">
+    <div class="mx-auto max-w-7xl">
+      <p class="reveal font-mono text-sm text-accent-soft">01 / ABOUT</p>
+      <h2 class="reveal mt-3 font-display text-4xl font-semibold text-text sm:text-5xl">
+        A sideways path into AI research.
+      </h2>
+
+      <div class="reveal mt-8 max-w-3xl space-y-5 text-base leading-relaxed text-text-muted">
+        <p>
+          I didn't start out planning to work in artificial intelligence. I completed pre-medical secondary
+          education with a distinction in Biology, expecting to study medicine, and the move into Data Science
+          that followed was neither planned nor smooth, and my first years of the degree show it.
+        </p>
+        <p>
+          What matters more to me than that early record is what came after: as I built confidence in
+          programming and quantitative reasoning, my academic performance recovered and then strengthened
+          considerably. That recovery coincided with the point I stopped treating AI as a subject to pass and
+          started treating it as a set of open problems, specifically, what happens to a model once it
+          leaves the clean conditions of a benchmark.
+        </p>
+      </div>
+
+      <div class="reveal mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {coreValues.map((v, i) => (
+          <div class="spot-card glass rounded-2xl p-5 transition-transform duration-300 hover:-translate-y-1" style={`transition-delay:${i * 60}ms`}>
+            <div class="flex h-9 w-9 items-center justify-center rounded-full border border-accent/30 text-accent">
+              {v.icon}
+            </div>
+            <h3 class="mt-3 font-display text-sm font-semibold text-text">{v.name}</h3>
+            <p class="mt-1.5 text-xs leading-relaxed text-text-muted">{v.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 / Experience -->
+  <section id="experience" class="relative bg-bg px-6 py-24 lg:px-12">
+    <div class="mx-auto max-w-6xl">
+      <p class="reveal font-mono text-sm text-accent-soft">02 / EXPERIENCE</p>
+      <h2 class="reveal mt-3 font-display text-4xl font-semibold text-text sm:text-5xl">
+        Teaching, and building on the side.
+      </h2>
+      <p class="reveal mt-4 max-w-2xl text-text-muted">
+        Alongside my degree and research, I've spent close to four years teaching, and a couple of years
+        building web products for clients before that.
+      </p>
+
+      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {experience.map((e, i) => (
+          <div
+            class="reveal-pop group relative flex flex-col overflow-hidden rounded-3xl border-2 border-transparent p-6 shadow-[0_25px_60px_-25px_rgba(0,0,0,0.65)] transition-all duration-500 hover:-translate-y-3 hover:border-[#9c2c3d80] hover:shadow-[0_35px_80px_-20px_rgba(0,0,0,0.8)]"
+            style={`transition-delay:${i * 80}ms; background: linear-gradient(155deg, #f4ead9 0%, #e8d8c4 55%, #dcc9ac 100%);`}
+          >
+            <div
+              class="pointer-events-none absolute -top-10 -right-10 h-28 w-28 rounded-full opacity-50 blur-2xl transition-all duration-500 group-hover:opacity-90 group-hover:scale-125"
+              style="background: radial-gradient(circle, #9c2c3d66, transparent 70%);"
+            >
+            </div>
+            <p class="font-mono text-[11px] uppercase tracking-wide" style="color:#8a7360;">{e.period}</p>
+            <h3 class="mt-2 font-display text-lg font-semibold transition-transform duration-500 group-hover:translate-x-1" style="color:#2a1013;">{e.role}</h3>
+            <p class="text-xs font-medium" style="color:#6d2932;">{e.org}</p>
+            <p class="mt-3 text-sm leading-relaxed" style="color:#5c4c3f;">{e.description}</p>
+            <span
+              class="mt-4 block h-0.5 w-0 rounded-full transition-all duration-500 ease-out group-hover:w-14"
+              style="background: linear-gradient(90deg, #9c2c3d, #6d2932);"
+            ></span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 / Education -->
+  <section id="education" class="theme-light relative bg-bg px-6 py-24 lg:px-12">
+    <div class="mx-auto max-w-6xl">
+      <p class="reveal font-mono text-sm text-accent-soft">03 / EDUCATION</p>
+      <h2 class="reveal mt-3 font-display text-4xl font-semibold text-text sm:text-5xl">
+        The credentials, for the record.
+      </h2>
+
+      <div class="reveal-pop mt-12 flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 md:grid md:snap-none md:grid-cols-3 md:overflow-visible md:pb-0">
+        {education.map((e, i) => (
+          <div
+            class="group relative min-w-[270px] flex-shrink-0 snap-center overflow-hidden rounded-2xl border border-border bg-surface/60 p-6 shadow-[0_15px_45px_-25px_rgba(0,0,0,0.55)] transition-all duration-500 hover:-translate-y-2 hover:border-accent/60 hover:bg-surface hover:shadow-[0_25px_55px_-20px_rgba(0,0,0,0.6)] md:min-w-0"
+            style={`transition-delay:${i * 90}ms`}
+          >
+            <span
+              class="pointer-events-none absolute -right-3 -top-3 font-display text-6xl font-semibold text-accent/10 transition-all duration-500 group-hover:text-accent/20 group-hover:scale-110"
+            >
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <p class="relative font-mono text-xs uppercase tracking-wide text-text-dim">{e.period}</p>
+            <h3 class="relative mt-1 font-display text-xl font-semibold text-text">{e.degree}</h3>
+            <p class="relative text-sm text-accent-soft">{e.institution}</p>
+            <p class="relative mt-2 text-sm leading-relaxed text-text-muted">{e.description}</p>
+            <span class="relative mt-4 block h-0.5 w-8 rounded-full bg-accent/40 transition-all duration-500 group-hover:w-16 group-hover:bg-accent"></span>
+          </div>
+        ))}
+      </div>
+
+      <div class="reveal mt-10 flex flex-wrap gap-2">
+        {allSkills.slice(0, 14).map((s) => (
+          <span class="rounded-full border border-border bg-surface-2/50 px-3 py-1 text-xs text-text-muted">{s}</span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 / Research -->
+  <section id="research" class="relative bg-bg px-6 py-24 lg:px-12">
+    <div class="mx-auto max-w-5xl">
+      <p class="reveal font-mono text-sm text-accent-soft">04 / RESEARCH</p>
+      <h2 class="reveal mt-3 font-display text-4xl font-semibold text-text sm:text-5xl">
+        Making healthcare AI worth trusting.
+      </h2>
+      <p class="reveal mt-4 max-w-2xl text-text-muted">
+        Most of my research sits at the intersection of machine learning and healthcare, where a wrong
+        prediction isn't a bad metric, it's a bad decision about a real patient. I care less about squeezing
+        out another accuracy point than about whether a model's output can survive being questioned.
+      </p>
+
+      <div class="reveal mt-6 flex flex-wrap gap-2">
+        {researchInterests.map((r) => (
+          <span class="rounded-full border border-accent/30 bg-accent/5 px-3 py-1.5 text-sm text-accent-soft">{r}</span>
+        ))}
+      </div>
+
+      <div class="mt-12 space-y-6">
+        {publications.map((pub, i) => (
+          <div
+            class="reveal-pop group relative overflow-hidden rounded-2xl border border-border bg-surface/50 pl-7 transition-all duration-500 hover:border-accent-2/40 hover:bg-surface/80"
+            style={`transition-delay:${i * 100}ms`}
+          >
+            <span class="absolute inset-y-0 left-0 w-1.5 bg-gradient-to-b from-accent to-accent-2"></span>
+            <div class="flex flex-col gap-4 p-6 sm:p-8 md:flex-row md:items-start">
+              <span class="font-display text-4xl font-semibold text-accent/25 transition-colors duration-500 group-hover:text-accent/50">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div class="flex-1">
+                <div class="flex flex-wrap items-start justify-between gap-3">
+                  <h3 class="font-display text-xl font-semibold leading-snug text-text">{pub.title}</h3>
+                  <span
+                    class:list={[
+                      "flex-shrink-0 rounded-full px-3 py-1 text-xs font-semibold tracking-wide",
+                      pub.status === "Published" ? "bg-mist text-void" : "bg-accent text-void",
+                    ]}
+                  >
+                    {pub.status}
+                  </span>
+                </div>
+                <p class="mt-3 text-sm text-mist">{pub.authors}</p>
+                <p class="mt-1 font-mono text-xs uppercase tracking-wide text-mist/80">{pub.venue} &middot; {pub.year}</p>
+                {pub.href && (
+                  <a
+                    href={pub.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-accent-soft underline underline-offset-4 hover:text-accent"
+                  >
+                    View on Google Scholar
+                    <svg class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 / Work -->
+  <section id="work" class="theme-light relative bg-bg px-6 py-24 lg:px-12">
+    <div class="mx-auto max-w-6xl">
+      <p class="reveal font-mono text-sm text-accent-soft">05 / WORK</p>
+      <h2 class="reveal mt-3 font-display text-4xl font-semibold text-text sm:text-5xl">
+        Systems, not just models.
+      </h2>
+      <p class="reveal mt-4 max-w-2xl text-text-muted">
+        From research prototypes to production-facing platforms, the common thread is testing whether an
+        idea holds up once real users and messy data get involved.
+      </p>
+
+      <ProjectStack client:visible />
+    </div>
+  </section>
+
+  <!-- 06 / Beyond the Code -->
+  <section id="beyond" class="relative bg-bg px-6 py-24 lg:px-12">
+    <div class="mx-auto max-w-6xl">
+      <p class="reveal font-mono text-sm text-accent-soft">06 / BEYOND THE CODE</p>
+      <h2 class="reveal mt-3 font-display text-4xl font-semibold text-text sm:text-5xl">
+        Credentials, leadership, and a bit of life.
+      </h2>
+
+      <div class="mt-12 grid items-start gap-8 lg:grid-cols-2">
+        <div class="reveal-pop group/card relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-surface-2/80 to-surface/40 p-6 shadow-[0_25px_70px_-30px_rgba(0,0,0,0.7)] transition-all duration-500 hover:border-accent-soft/40 md:p-8">
+          <div class="flex items-center gap-3">
+            <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </span>
+            <h3 class="font-display text-xl font-semibold text-text">Certifications</h3>
+          </div>
+          <div class="mt-6 space-y-3">
+            {certifications.map((c, i) => {
+              const Tag = c.href ? "a" : "div";
+              return (
+                <Tag
+                  {...(c.href ? { href: c.href, target: "_blank", rel: "noopener noreferrer" } : {})}
+                  class="shine-card reveal-pop group relative flex items-center justify-between gap-3 rounded-2xl bg-surface/50 px-5 py-4 transition-all duration-300 hover:-translate-y-1 hover:bg-surface/80"
+                  style={`transition-delay:${i * 70}ms`}
+                >
+                  <div>
+                    <p class="text-sm font-medium text-text">{c.title}</p>
+                    <p class="text-xs text-mist">{c.issuer}</p>
+                  </div>
+                  {c.href && (
+                    <svg class="h-3.5 w-3.5 flex-shrink-0 text-accent-soft" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  )}
+                </Tag>
+              );
+            })}
+          </div>
+        </div>
+
+        <div class="reveal-pop group/card relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-surface-2/80 to-surface/40 p-6 shadow-[0_25px_70px_-30px_rgba(0,0,0,0.7)] transition-all duration-500 hover:border-accent-soft/40 md:p-8">
+          <div class="flex items-center gap-3">
+            <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-accent-2/15 text-accent-2">
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+              </svg>
+            </span>
+            <h3 class="font-display text-xl font-semibold text-text">Leadership &amp; Activities</h3>
+          </div>
+          <div class="mt-6 space-y-3">
+            {activities.map((a, i) => {
+              const Tag = a.href ? "a" : "div";
+              return (
+                <Tag
+                  {...(a.href ? { href: a.href, target: "_blank", rel: "noopener noreferrer" } : {})}
+                  class="shine-card reveal-pop group relative flex items-center justify-between gap-3 rounded-2xl bg-surface/50 px-5 py-4 transition-all duration-300 hover:-translate-y-1 hover:bg-surface/80"
+                  style={`transition-delay:${i * 70}ms`}
+                >
+                  <div>
+                    <p class="text-sm font-medium text-text">{a.role}</p>
+                    <p class="text-xs text-mist">{a.org} &middot; {a.period}</p>
+                  </div>
+                  {a.href && (
+                    <svg class="h-3.5 w-3.5 flex-shrink-0 text-accent-soft" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  )}
+                </Tag>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 / Contact -->
+  <section id="contact" class="theme-light relative bg-bg px-6 py-24 lg:px-12">
+    <div class="mx-auto max-w-6xl text-center">
+      <p class="reveal font-mono text-sm text-accent-soft">07 / CONTACT</p>
+      <h2 class="reveal mt-3 font-display text-4xl font-semibold text-text sm:text-5xl">Let's talk.</h2>
+      <p class="reveal mx-auto mt-4 max-w-xl text-text-muted">
+        Research collaboration, project ideas, or opportunities, reach out through any of these.
+      </p>
+
+      <!-- Social bar: always the dark theme's maroon tones, regardless of the
+           section's own light/dark banding -->
+      <div
+        class="reveal mx-auto mt-10 flex w-fit items-center justify-center gap-6 rounded-full border border-white/10 px-8 py-5 shadow-lg"
+        style="background: linear-gradient(135deg, #6d2932 0%, #561c24 55%, #6d2932 100%);"
+      >
+        <a
+          href={profile.social.github}
+          aria-label="GitHub"
+          class="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 text-[#c7b7a3] transition-all hover:-translate-y-0.5 hover:border-[#e8d8c4]/50 hover:text-[#e8d8c4]"
+        >
+          <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        </a>
+        <a
+          href={`mailto:${profile.email}`}
+          aria-label="Email"
+          class="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 text-[#c7b7a3] transition-all hover:-translate-y-0.5 hover:border-[#e8d8c4]/50 hover:text-[#e8d8c4]"
+        >
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        </a>
+        <a
+          href={profile.social.linkedin}
+          aria-label="LinkedIn"
+          class="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 text-[#c7b7a3] transition-all hover:-translate-y-0.5 hover:border-[#e8d8c4]/50 hover:text-[#e8d8c4]"
+        >
+          <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+        <a
+          href={profile.social.scholar}
+          aria-label="Google Scholar"
+          class="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 text-[#c7b7a3] transition-all hover:-translate-y-0.5 hover:border-[#e8d8c4]/50 hover:text-[#e8d8c4]"
+        >
+          <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2L1 7l11 5 9-4.09V16h2V7L12 2z" />
+            <path d="M5 10.5V15c0 1.66 3.13 3 7 3s7-1.34 7-3v-4.5l-7 3.18-7-3.18z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .marquee {
+    animation: marquee 40s linear infinite;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee { animation: none; }
+  }
+</style>

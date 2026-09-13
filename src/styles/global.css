@@ -1,0 +1,257 @@
+@import "tailwindcss";
+
+/* Self-hosted variable fonts — no external font requests, no render-blocking Google Fonts call */
+@import "@fontsource-variable/fraunces";
+@import "@fontsource-variable/space-grotesk";
+@import "@fontsource-variable/inter";
+
+@theme {
+  /* ---- Coffee palette (wine / burgundy / taupe / cream) — dark is the default theme ---- */
+
+  --color-void: #1a0a0d;
+  --color-bg: #561c24;
+  --color-surface: #6d2932;
+  --color-surface-2: #7c3540;
+  --color-border: #4a2028;
+
+  --color-ink: #6d2932;
+  --color-steel: #a68a76;
+  --color-mist: #c7b7a3;
+  --color-pale: #e8d8c4;
+
+  --color-accent: #d9c4a8;
+  --color-accent-2: #a8434f;
+  --color-accent-soft: #e8d8c4;
+
+  --color-text: #e8d8c4;
+  --color-text-muted: #c7b7a3;
+  --color-text-dim: #93766a;
+
+  --font-display: "Fraunces Variable", "Fraunces", ui-serif, Georgia, serif;
+  --font-mono: "Space Grotesk Variable", ui-monospace, monospace;
+  --font-body: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-fade-up: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-glow: glow 4s ease-in-out infinite;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes glow {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+}
+
+/* Light-section theme — applied per-section (not a site-wide toggle) to whichever
+   sections should read as the "light" half of the editorial light/dark banding.
+   Same custom properties, repainted for the cream/taupe half of the Coffee
+   palette. Everything built on the @theme tokens above (bg-bg, text-text,
+   .glass, etc.) repaints for free since Tailwind v4 utilities reference these
+   as var(...). */
+.theme-light {
+  --color-void: #ffffff;
+  --color-bg: #e8d8c4;
+  --color-surface: #dcc9ac;
+  --color-surface-2: #cbb492;
+  --color-border: #b3a08a;
+
+  --color-ink: #c7b7a3;
+  --color-steel: #a3897a;
+  --color-mist: #8a7360;
+  --color-pale: #6d2932;
+
+  --color-accent: #6d2932;
+  --color-accent-2: #561c24;
+  --color-accent-soft: #8c3a45;
+
+  --color-text: #3a1116;
+  --color-text-muted: #6d2932;
+  --color-text-dim: #8a7360;
+
+  color-scheme: light;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 560;
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-text);
+  }
+
+  /* Slim, on-theme scrollbar (Firefox + WebKit) */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-steel) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: var(--color-steel);
+    border-radius: 999px;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .glass {
+    background: color-mix(in srgb, var(--color-surface) 70%, transparent);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid color-mix(in srgb, var(--color-pale) 14%, transparent);
+  }
+
+  .text-gradient {
+    background-image: linear-gradient(90deg, var(--color-accent), var(--color-accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* A slightly richer reveal (scale + fade) for sections that want to read
+     differently from the plain fade-up used elsewhere. */
+  .reveal-pop {
+    opacity: 0;
+    transform: translateY(24px) scale(0.94);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal-pop.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  /* Spotlight-border card: a soft cursor-tracked highlight plus a gradient
+     border that only appears on hover — the "not-a-conventional-card" treatment. */
+  .spot-card {
+    position: relative;
+    isolation: isolate;
+    --spot-x: 50%;
+    --spot-y: 50%;
+  }
+  .spot-card::before,
+  .spot-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+  }
+  .spot-card::before {
+    z-index: 0;
+    background: radial-gradient(
+      480px circle at var(--spot-x) var(--spot-y),
+      color-mix(in srgb, var(--color-accent-soft) 14%, transparent),
+      transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .spot-card::after {
+    z-index: 1;
+    padding: 1px;
+    background: radial-gradient(
+      280px circle at var(--spot-x) var(--spot-y),
+      color-mix(in srgb, var(--color-accent-soft) 70%, transparent),
+      transparent 65%
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .spot-card:hover::before,
+  .spot-card:hover::after {
+    opacity: 1;
+  }
+  .spot-card > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Solid creme border plus a diagonal shine sweeping across on hover, used
+     for the Beyond the Code credential/activity rows. */
+  .shine-card {
+    position: relative;
+    overflow: hidden;
+    border-width: 2px;
+    border-color: color-mix(in srgb, var(--color-pale) 28%, transparent);
+    transition: border-color 0.4s ease, transform 0.3s ease;
+  }
+  .shine-card:hover {
+    border-color: var(--color-pale);
+  }
+  .shine-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    transform: skewX(-20deg);
+    background: linear-gradient(
+      115deg,
+      transparent,
+      color-mix(in srgb, var(--color-pale) 45%, transparent),
+      transparent
+    );
+    transition: left 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .shine-card:hover::after {
+    left: 125%;
+  }
+}
