@@ -1,59 +1,29 @@
-import { useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
-import { MeshTransmissionMaterial, Environment, Lightformer } from "@react-three/drei";
+import { MeshTransmissionMaterial, Environment, Lightformer, useTexture } from "@react-three/drei";
 import * as THREE from "three";
 import type { HeroState } from "./heroState";
 
 /**
- * Placeholder portrait rendered *inside* the glass sphere so the swap to a
- * real photo later is a one-line change: replace this canvas-drawn texture
- * with `useTexture("/images/profile/hero.jpg")` from drei and pass its
- * result as the `map`. Stays upright while the glass shell spins around it.
+ * The portrait rendered *inside* the glass sphere — a square, top-cropped
+ * photo maps cleanly onto CircleGeometry's default UVs (inscribed circle,
+ * no distortion). Stays upright while the glass shell spins around it.
  */
 function Portrait() {
-  const texture = useMemo(() => {
-    const canvas = document.createElement("canvas");
-    canvas.width = 512;
-    canvas.height = 512;
-    const ctx = canvas.getContext("2d")!;
-
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(256, 256, 256, 0, Math.PI * 2);
-    ctx.closePath();
-    ctx.clip();
-
-    const grad = ctx.createLinearGradient(0, 0, 512, 512);
-    grad.addColorStop(0, "#7c3540");
-    grad.addColorStop(1, "#2a1013");
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, 512, 512);
-
-    ctx.fillStyle = "rgba(232, 216, 196, 0.5)";
-    ctx.beginPath();
-    ctx.arc(256, 205, 72, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.ellipse(256, 430, 155, 140, 0, Math.PI, 0);
-    ctx.fill();
-    ctx.restore();
-
-    ctx.beginPath();
-    ctx.arc(256, 256, 250, 0, Math.PI * 2);
-    ctx.strokeStyle = "rgba(232, 216, 196, 0.35)";
-    ctx.lineWidth = 5;
-    ctx.stroke();
-
-    const tex = new THREE.CanvasTexture(canvas);
-    tex.colorSpace = THREE.SRGBColorSpace;
-    return tex;
-  }, []);
+  const texture = useTexture("/images/profile/hira-hero.jpg");
+  texture.colorSpace = THREE.SRGBColorSpace;
 
   return (
-    <mesh position={[0, 0, 1.05]}>
-      <circleGeometry args={[1.05, 64]} />
-      <meshBasicMaterial map={texture} transparent />
-    </mesh>
+    <group>
+      <mesh position={[0, 0, 1.05]}>
+        <circleGeometry args={[1.05, 64]} />
+        <meshBasicMaterial map={texture} toneMapped={false} />
+      </mesh>
+      <mesh position={[0, 0, 1.06]}>
+        <ringGeometry args={[1.0, 1.06, 64]} />
+        <meshBasicMaterial color="#e8d8c4" transparent opacity={0.45} side={THREE.DoubleSide} toneMapped={false} />
+      </mesh>
+    </group>
   );
 }
 
