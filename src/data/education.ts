@@ -45,7 +45,7 @@ export const experience: ExperienceEntry[] = [
     role: "Private Tutor, Biology & Computer Science",
     org: "Online",
     period: "2023 – Present",
-    description: "Mentored 10+ international students one-on-one through concept-based, personalized instruction.",
+    description: "Mentored international students one-on-one through concept-based, personalized instruction.",
   },
   {
     role: "Biology Teacher",

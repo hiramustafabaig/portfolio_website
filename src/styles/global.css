@@ -220,4 +220,38 @@
     position: relative;
     z-index: 2;
   }
+
+  /* Solid creme border plus a diagonal shine sweeping across on hover, used
+     for the Beyond the Code credential/activity rows. */
+  .shine-card {
+    position: relative;
+    overflow: hidden;
+    border-width: 2px;
+    border-color: color-mix(in srgb, var(--color-pale) 28%, transparent);
+    transition: border-color 0.4s ease, transform 0.3s ease;
+  }
+  .shine-card:hover {
+    border-color: var(--color-pale);
+  }
+  .shine-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    transform: skewX(-20deg);
+    background: linear-gradient(
+      115deg,
+      transparent,
+      color-mix(in srgb, var(--color-pale) 45%, transparent),
+      transparent
+    );
+    transition: left 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .shine-card:hover::after {
+    left: 125%;
+  }
 }

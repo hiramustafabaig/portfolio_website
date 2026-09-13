@@ -10,7 +10,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     category: "Web & Full-Stack",
-    items: ["Next.js", "React", "Node.js", "TypeScript", "Tailwind CSS", "RESTful APIs"],
+    items: ["Next.js", "React", "Node.js", "TypeScript", "Tailwind CSS"],
   },
   {
     category: "Data & Cloud",
