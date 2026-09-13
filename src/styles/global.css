@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+/* Self-hosted variable fonts — no external font requests, no render-blocking Google Fonts call */
+@import "@fontsource-variable/space-grotesk";
+@import "@fontsource-variable/inter";
+
+@theme {
+  /* ---- Dusk palette, extracted from the sunset-over-mountains reference ---- */
+
+  /* Background layers (night sky -> mountain shadow) */
+  --color-void: #05070c;
+  --color-bg: #0a1220;
+  --color-surface: #121c30;
+  --color-surface-2: #1a2740;
+  --color-border: #253150;
+
+  /* Mountain blues (mid-tones, used for secondary UI + the 3D scene) */
+  --color-blue-deep: #1c3559;
+  --color-blue: #2f5c94;
+  --color-blue-mist: #6f93b8;
+  --color-blue-pale: #aac4dd;
+
+  /* Sunset accents (warm, used sparingly as the "one confident accent") */
+  --color-accent: #e8825f;
+  --color-accent-soft: #f0a868;
+  --color-accent-gold: #f5c177;
+  --color-accent-deep: #c65d3b;
+
+  /* Text */
+  --color-text: #f7f3ee;
+  --color-text-muted: #9fb0c4;
+  --color-text-dim: #5f7086;
+
+  --font-display: "Space Grotesk Variable", "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-fade-up: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-glow: glow 4s ease-in-out infinite;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes glow {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-void);
+  }
+
+  /* Slim, on-theme scrollbar (Firefox + WebKit) */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-blue) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: var(--color-blue);
+    border-radius: 999px;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .glass {
+    background: color-mix(in srgb, var(--color-surface) 70%, transparent);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid color-mix(in srgb, var(--color-blue-pale) 12%, transparent);
+  }
+
+  .text-gradient-dusk {
+    background-image: linear-gradient(90deg, var(--color-accent), var(--color-accent-gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
