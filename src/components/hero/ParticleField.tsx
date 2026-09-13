@@ -51,7 +51,7 @@ export default function ParticleField({ hero, count = 90 }: { hero: HeroState; c
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial color="#cbd7e5" size={0.03} transparent opacity={0.4} sizeAttenuation depthWrite={false} />
+      <pointsMaterial color="#e8d8c4" size={0.03} transparent opacity={0.4} sizeAttenuation depthWrite={false} />
     </points>
   );
 }

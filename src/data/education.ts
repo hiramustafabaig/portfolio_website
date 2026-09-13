@@ -27,7 +27,14 @@ export const education: EducationEntry[] = [
   },
 ];
 
-export const teaching = [
+export type ExperienceEntry = {
+  role: string;
+  org: string;
+  period: string;
+  description: string;
+};
+
+export const experience: ExperienceEntry[] = [
   {
     role: "Online Tutor",
     org: "Nexus Academy (UK)",
@@ -44,6 +51,12 @@ export const teaching = [
     role: "Biology Teacher",
     org: "Encore Star Academy",
     period: "Aug 2023 – Feb 2025",
-    description: "Delivered concept-driven Biology instruction to FSc and A-Level students.",
+    description: "Delivered concept-driven Biology instruction to FSc and A-Level students through interactive, student-centered methods.",
+  },
+  {
+    role: "Freelance Web Developer",
+    org: "Upwork & Fiverr",
+    period: "Jul 2021 – Jan 2023",
+    description: "Delivered end-to-end web development, graphic design, and video editing solutions for international clients.",
   },
 ];

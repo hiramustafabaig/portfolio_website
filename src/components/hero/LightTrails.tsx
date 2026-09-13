@@ -112,9 +112,9 @@ function Trail({
 export default function LightTrails({ hero }: { hero: HeroState }) {
   return (
     <>
-      <Trail seed={3} radius={2.4} speed={0.12} colorA="#9c2c3d" colorB="#efe3cb" tubeRadius={0.02} hero={hero} />
-      <Trail seed={11} radius={3.1} speed={0.08} colorA="#93a8c9" colorB="#9c2c3d" tubeRadius={0.015} hero={hero} />
-      <Trail seed={19} radius={2.0} speed={0.16} colorA="#efe3cb" colorB="#93a8c9" tubeRadius={0.012} hero={hero} />
+      <Trail seed={3} radius={2.4} speed={0.12} colorA="#6d2932" colorB="#e8d8c4" tubeRadius={0.02} hero={hero} />
+      <Trail seed={11} radius={3.1} speed={0.08} colorA="#a8434f" colorB="#6d2932" tubeRadius={0.015} hero={hero} />
+      <Trail seed={19} radius={2.0} speed={0.16} colorA="#e8d8c4" colorB="#a8434f" tubeRadius={0.012} hero={hero} />
     </>
   );
 }

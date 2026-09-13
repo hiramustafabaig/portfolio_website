@@ -45,7 +45,7 @@ function FresnelShell({ hovered }: { hovered: boolean }) {
         vertexShader={fresnelVertex}
         fragmentShader={fresnelFragment}
         uniforms={{
-          uColor: { value: new THREE.Color("#efe3cb") },
+          uColor: { value: new THREE.Color("#e8d8c4") },
           uIntensity: { value: 0.55 },
         }}
         transparent
@@ -84,9 +84,9 @@ export default function HeroSphere({ hero }: { hero: HeroState }) {
   return (
     <group ref={group} position={[2.1, 0, 0]}>
       <Environment resolution={128}>
-        <Lightformer form="rect" intensity={3} color="#9c2c3d" position={[0, 3, -4]} scale={[6, 3, 1]} />
-        <Lightformer form="rect" intensity={2} color="#93a8c9" position={[-4, -1, 2]} scale={[3, 5, 1]} rotation={[0, Math.PI / 2, 0]} />
-        <Lightformer form="ring" intensity={2.5} color="#efe3cb" position={[4, 2, 3]} scale={2.5} />
+        <Lightformer form="rect" intensity={3} color="#6d2932" position={[0, 3, -4]} scale={[6, 3, 1]} />
+        <Lightformer form="rect" intensity={2} color="#a8434f" position={[-4, -1, 2]} scale={[3, 5, 1]} rotation={[0, Math.PI / 2, 0]} />
+        <Lightformer form="ring" intensity={2.5} color="#e8d8c4" position={[4, 2, 3]} scale={2.5} />
       </Environment>
 
       <mesh
@@ -96,7 +96,7 @@ export default function HeroSphere({ hero }: { hero: HeroState }) {
       >
         <sphereGeometry args={[1.6, 128, 128]} />
         <MeshTransmissionMaterial
-          color="#f5eee0"
+          color="#e8d8c4"
           thickness={1.4}
           roughness={hovered ? 0.06 : 0.12}
           transmission={1}
@@ -109,7 +109,7 @@ export default function HeroSphere({ hero }: { hero: HeroState }) {
           clearcoatRoughness={0.1}
           samples={6}
           resolution={512}
-          background={new THREE.Color("#100809")}
+          background={new THREE.Color("#561c24")}
         />
       </mesh>
 

@@ -48,11 +48,11 @@ export default function HeroCanvas() {
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
         camera={{ position: [0, 0, 7.5], fov: 42 }}
       >
-        <color attach="background" args={["#100809"]} />
-        <fog attach="fog" args={["#100809", 6, 16]} />
+        <color attach="background" args={["#561c24"]} />
+        <fog attach="fog" args={["#561c24", 6, 16]} />
         <ambientLight intensity={0.4} />
-        <pointLight position={[4, 3, 4]} intensity={12} color="#efe3cb" />
-        <pointLight position={[-4, -2, -3]} intensity={8} color="#93a8c9" />
+        <pointLight position={[4, 3, 4]} intensity={12} color="#e8d8c4" />
+        <pointLight position={[-4, -2, -3]} intensity={8} color="#a8434f" />
 
         <SceneController heroRef={heroRef} />
         <Suspense fallback={null}>

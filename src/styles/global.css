@@ -1,32 +1,33 @@
 @import "tailwindcss";
 
 /* Self-hosted variable fonts — no external font requests, no render-blocking Google Fonts call */
+@import "@fontsource-variable/fraunces";
 @import "@fontsource-variable/space-grotesk";
 @import "@fontsource-variable/inter";
 
 @theme {
-  /* ---- Editorial palette: Blood Red / Whispy Blue / Buttercream — dark is the default theme ---- */
+  /* ---- Coffee palette (wine / burgundy / taupe / cream) — dark is the default theme ---- */
 
-  --color-void: #050303;
-  --color-bg: #100809;
-  --color-surface: #1c1112;
-  --color-surface-2: #2a1718;
-  --color-border: #3d2124;
+  --color-void: #1a0a0d;
+  --color-bg: #561c24;
+  --color-surface: #6d2932;
+  --color-surface-2: #7c3540;
+  --color-border: #4a2028;
 
-  --color-ink: #2a1013;
-  --color-steel: #526078;
-  --color-mist: #93a0b8;
-  --color-pale: #cbd7e5;
+  --color-ink: #6d2932;
+  --color-steel: #a68a76;
+  --color-mist: #c7b7a3;
+  --color-pale: #e8d8c4;
 
-  --color-accent: #9c2c3d;
-  --color-accent-2: #93a8c9;
-  --color-accent-soft: #efe3cb;
+  --color-accent: #d9c4a8;
+  --color-accent-2: #a8434f;
+  --color-accent-soft: #e8d8c4;
 
-  --color-text: #f5eee0;
-  --color-text-muted: #b8ab97;
-  --color-text-dim: #6e5f57;
+  --color-text: #e8d8c4;
+  --color-text-muted: #c7b7a3;
+  --color-text-dim: #93766a;
 
-  --font-display: "Space Grotesk Variable", "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces Variable", "Fraunces", ui-serif, Georgia, serif;
   --font-mono: "Space Grotesk Variable", ui-monospace, monospace;
   --font-body: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
 
@@ -48,28 +49,31 @@
   }
 }
 
-/* Light theme override — same custom properties, repainted for a Buttercream surface.
-   Everything built on the @theme tokens above (bg-bg, text-text, .glass, etc.)
-   repaints automatically since Tailwind v4 utilities reference these as var(...). */
-:root.light {
+/* Light-section theme — applied per-section (not a site-wide toggle) to whichever
+   sections should read as the "light" half of the editorial light/dark banding.
+   Same custom properties, repainted for the cream/taupe half of the Coffee
+   palette. Everything built on the @theme tokens above (bg-bg, text-text,
+   .glass, etc.) repaints for free since Tailwind v4 utilities reference these
+   as var(...). */
+.theme-light {
   --color-void: #ffffff;
-  --color-bg: #f6ecd9;
-  --color-surface: #efe2c8;
-  --color-surface-2: #e6d4ae;
-  --color-border: #d6c19a;
+  --color-bg: #e8d8c4;
+  --color-surface: #dcc9ac;
+  --color-surface-2: #cbb492;
+  --color-border: #b3a08a;
 
-  --color-ink: #cbd7e5;
-  --color-steel: #7c8ba5;
-  --color-mist: #5c6f8f;
-  --color-pale: #526078;
+  --color-ink: #c7b7a3;
+  --color-steel: #a3897a;
+  --color-mist: #8a7360;
+  --color-pale: #6d2932;
 
-  --color-accent: #7a212f;
-  --color-accent-2: #4f6288;
-  --color-accent-soft: #9c2c3d;
+  --color-accent: #6d2932;
+  --color-accent-2: #561c24;
+  --color-accent-soft: #8c3a45;
 
-  --color-text: #241412;
-  --color-text-muted: #5c4c3f;
-  --color-text-dim: #8a7a68;
+  --color-text: #3a1116;
+  --color-text-muted: #6d2932;
+  --color-text-dim: #8a7360;
 
   color-scheme: light;
 }
@@ -89,6 +93,9 @@
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 560;
+    letter-spacing: -0.01em;
   }
 
   ::selection {
