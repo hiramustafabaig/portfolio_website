@@ -57,8 +57,29 @@ const marqueeSkills = [...allSkills, ...allSkills];
         </div>
       </div>
 
-      <!-- Right column intentionally empty on desktop — the 3D sphere (with the
-           portrait rendered inside it) occupies this space as part of HeroCanvas. -->
+      <!-- Portrait: plain sharp <img>, layered on top of the WebGL canvas so it
+           never passes through the glass sphere's refraction/blur — reads as
+           "sitting on the bubble" while staying perfectly crisp. -->
+      <div class="reveal relative mx-auto w-fit lg:mx-0 lg:ml-auto">
+        <div class="absolute -inset-6 rounded-full bg-gradient-to-br from-accent/45 via-accent-2/30 to-transparent blur-3xl"></div>
+        <div
+          class="relative h-64 w-64 rounded-full p-[3px] shadow-[0_25px_70px_-20px_rgba(0,0,0,0.6)] sm:h-72 sm:w-72 lg:h-80 lg:w-80"
+          style="background: linear-gradient(135deg, var(--color-accent-soft), var(--color-accent) 45%, var(--color-accent-2));"
+        >
+          <div class="h-full w-full overflow-hidden rounded-full ring-4 ring-bg/50">
+            <img
+              src="/images/profile/hira-hero.jpg"
+              alt="Hira Baig"
+              width="800"
+              height="800"
+              class="h-full w-full object-cover"
+            />
+          </div>
+        </div>
+        <span class="glass absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-4 py-1.5 font-mono text-xs text-accent-soft">
+          BS Data Science &middot; '27
+        </span>
+      </div>
     </div>
   </section>
 

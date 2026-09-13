@@ -1,31 +1,16 @@
 import { useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
-import { MeshTransmissionMaterial, Environment, Lightformer, useTexture } from "@react-three/drei";
+import { MeshTransmissionMaterial, Environment, Lightformer } from "@react-three/drei";
 import * as THREE from "three";
 import type { HeroState } from "./heroState";
 
-/**
- * The portrait rendered *inside* the glass sphere — a square, top-cropped
- * photo maps cleanly onto CircleGeometry's default UVs (inscribed circle,
- * no distortion). Stays upright while the glass shell spins around it.
- */
-function Portrait() {
-  const texture = useTexture("/images/profile/hira-hero.jpg");
-  texture.colorSpace = THREE.SRGBColorSpace;
-
-  return (
-    <group>
-      <mesh position={[0, 0, 1.05]}>
-        <circleGeometry args={[1.05, 64]} />
-        <meshBasicMaterial map={texture} toneMapped={false} />
-      </mesh>
-      <mesh position={[0, 0, 1.06]}>
-        <ringGeometry args={[1.0, 1.06, 64]} />
-        <meshBasicMaterial color="#e8d8c4" transparent opacity={0.45} side={THREE.DoubleSide} toneMapped={false} />
-      </mesh>
-    </group>
-  );
-}
+// Note: an earlier version rendered the portrait as a texture living behind
+// the glass sphere's MeshTransmissionMaterial. That material's whole job is
+// to bend/blur/refract whatever sits behind it, so a photo placed there can
+// never read as sharp — it's fighting the material, not a bug to tune away.
+// The portrait now lives in the DOM instead (see index.astro), layered on
+// top of this canvas so it stays perfectly crisp while still reading as
+// "part of" the glowing bubble underneath it.
 
 const fresnelVertex = /* glsl */ `
   varying vec3 vNormal;
@@ -136,7 +121,6 @@ export default function HeroSphere({ hero }: { hero: HeroState }) {
         />
       </mesh>
 
-      <Portrait />
       <FresnelShell hovered={hovered} />
     </group>
   );
