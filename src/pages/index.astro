@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import HeroCanvas from "../components/hero/HeroCanvas";
+import ExperienceParticleField from "../components/experience/ExperienceParticleField";
 import ProjectStack from "../components/projects/ProjectStack";
 import { profile, coreValues } from "../data/profile";
 import { skillGroups } from "../data/skills";
@@ -130,8 +131,9 @@ const marqueeSkills = [...allSkills, ...allSkills];
   </section>
 
   <!-- 02 / Experience -->
-  <section id="experience" class="relative bg-bg px-6 py-24 lg:px-12">
-    <div class="mx-auto max-w-6xl">
+  <section id="experience" class="relative overflow-hidden bg-bg px-6 py-24 lg:px-12">
+    <ExperienceParticleField client:visible />
+    <div class="relative z-10 mx-auto max-w-6xl">
       <p class="reveal font-mono text-sm text-accent-soft">02 / EXPERIENCE</p>
       <h2 class="reveal mt-3 font-display text-4xl font-semibold text-text sm:text-5xl">
         Teaching, and building on the side.
@@ -224,34 +226,35 @@ const marqueeSkills = [...allSkills, ...allSkills];
       <div class="mt-12 space-y-6">
         {publications.map((pub, i) => (
           <div
-            class="reveal-pop group relative overflow-hidden rounded-2xl border border-border bg-surface/50 pl-7 transition-all duration-500 hover:border-accent-2/40 hover:bg-surface/80"
-            style={`transition-delay:${i * 100}ms`}
+            class="reveal-pop group relative overflow-hidden rounded-2xl border-2 border-accent/15 pl-7 shadow-[0_20px_50px_-30px_rgba(0,0,0,0.5)] transition-all duration-500 hover:-translate-y-1.5 hover:border-accent/50 hover:shadow-[0_30px_60px_-25px_rgba(0,0,0,0.55)]"
+            style={`transition-delay:${i * 100}ms; background: linear-gradient(155deg, #f4ead9 0%, #e8d8c4 60%, #dcc9ac 100%);`}
           >
-            <span class="absolute inset-y-0 left-0 w-1.5 bg-gradient-to-b from-accent to-accent-2"></span>
+            <span class="absolute inset-y-0 left-0 w-1.5" style="background: linear-gradient(180deg, #9c2c3d, #6d2932);"></span>
             <div class="flex flex-col gap-4 p-6 sm:p-8 md:flex-row md:items-start">
-              <span class="font-display text-4xl font-semibold text-accent/25 transition-colors duration-500 group-hover:text-accent/50">
+              <span class="font-display text-4xl font-semibold text-accent/20 transition-colors duration-500 group-hover:text-accent/40">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div class="flex-1">
                 <div class="flex flex-wrap items-start justify-between gap-3">
-                  <h3 class="font-display text-xl font-semibold leading-snug text-text">{pub.title}</h3>
+                  <h3 class="font-display text-xl font-semibold leading-snug" style="color:#2a1013;">{pub.title}</h3>
                   <span
                     class:list={[
-                      "flex-shrink-0 rounded-full px-3 py-1 text-xs font-semibold tracking-wide",
-                      pub.status === "Published" ? "bg-mist text-void" : "bg-accent text-void",
+                      "flex-shrink-0 rounded-full px-3 py-1 text-xs font-semibold tracking-wide text-[#f4ead9]",
                     ]}
+                    style={pub.status === "Published" ? "background:#6d2932;" : "background:#9c2c3d;"}
                   >
                     {pub.status}
                   </span>
                 </div>
-                <p class="mt-3 text-sm text-mist">{pub.authors}</p>
-                <p class="mt-1 font-mono text-xs uppercase tracking-wide text-mist/80">{pub.venue} &middot; {pub.year}</p>
+                <p class="mt-3 text-sm font-medium" style="color:#6d2932;">{pub.authors}</p>
+                <p class="mt-1 font-mono text-xs uppercase tracking-wide" style="color:#8a7360;">{pub.venue} &middot; {pub.year}</p>
                 {pub.href && (
                   <a
                     href={pub.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-accent-soft underline underline-offset-4 hover:text-accent"
+                    class="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold underline underline-offset-4 transition-colors"
+                    style="color:#9c2c3d;"
                   >
                     View on Google Scholar
                     <svg class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">

@@ -23,7 +23,7 @@ export const education: EducationEntry[] = [
     degree: "Matriculation in Science",
     institution: "The Educators School",
     period: "2017 – 2019",
-    description: "Early exposure to programming and mathematics.",
+    description: "Broad grounding in physics, chemistry, biology, and mathematics.",
   },
 ];
 
