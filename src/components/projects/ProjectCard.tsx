@@ -19,6 +19,7 @@ export default function ProjectCard({
   count: number;
   delay?: number;
 }) {
+  const fromLeft = index % 2 === 0;
   const [reducedMotion, setReducedMotion] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -50,15 +51,28 @@ export default function ProjectCard({
     <motion.article
       ref={cardRef}
       id={project.slug}
-      className="spot-card group scroll-mt-28 overflow-hidden rounded-[2rem] border border-border/70 bg-surface/70 shadow-[0_20px_60px_-25px_rgba(0,0,0,0.5)] transition-shadow duration-500 hover:shadow-[0_35px_75px_-20px_rgba(0,0,0,0.55)]"
+      className="spot-card group relative scroll-mt-28 overflow-hidden rounded-[2rem] border border-border/70 bg-surface/70 shadow-[0_20px_60px_-25px_rgba(0,0,0,0.5)] transition-shadow duration-500 hover:shadow-[0_40px_85px_-20px_rgba(0,0,0,0.6)]"
       style={{ rotateX: springX, rotateY: springY, transformPerspective: 900 }}
-      initial={reducedMotion ? undefined : { opacity: 0, y: 28, scale: 0.96 }}
-      whileInView={reducedMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] }}
+      initial={reducedMotion ? undefined : { opacity: 0, x: fromLeft ? -90 : 90, scale: 0.94 }}
+      whileInView={reducedMotion ? undefined : { opacity: 1, x: 0, scale: 1 }}
+      whileHover={reducedMotion ? undefined : { scale: 1.015, y: -4 }}
+      viewport={{ once: true, amount: 0.25 }}
+      transition={{ duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] }}
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
     >
+      <div
+        className="pointer-events-none absolute -top-16 h-40 w-40 rounded-full opacity-0 blur-3xl transition-opacity duration-700 group-hover:opacity-60"
+        style={{
+          left: fromLeft ? undefined : "-2.5rem",
+          right: fromLeft ? "-2.5rem" : undefined,
+          background: "radial-gradient(circle, #9c2c3d55, transparent 70%)",
+        }}
+      />
+      <span
+        className="pointer-events-none absolute inset-x-0 top-0 h-[3px] scale-x-0 bg-gradient-to-r from-transparent via-accent to-transparent opacity-0 transition-all duration-500 group-hover:scale-x-100 group-hover:opacity-100"
+      />
+
       {project.image && (
         <div className="relative h-40 w-full overflow-hidden bg-surface-2/70 sm:h-48">
           <img

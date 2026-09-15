@@ -39,7 +39,6 @@ export const activities: Activity[] = [
     role: "Event Management Co-Head",
     org: "Hult Prize Foundation",
     period: "2025",
-    href: "https://www.linkedin.com/posts/hira-baig-195b13338_eventmanagement-ilc-comsats-activity-7366038285661413377-i8We?utm_source=social_share_video_v2&utm_medium=android_app&rcm=ACoAAFTh6kEBOAaQuTpX4jJSRzKg6RxjZPuK-aw&utm_campaign=copy_link",
   },
   {
     role: "Event Management Co-Lead",

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { OrthographicCamera } from "@react-three/drei";
 import * as THREE from "three";
 
 /** Deterministic PRNG so the "organic" randomness is stable across renders/HMR. */
@@ -169,25 +170,9 @@ function ParticleScene({
   activeRef: React.MutableRefObject<number>;
   reducedMotion: boolean;
 }) {
-  const { size, camera } = useThree();
+  const { size } = useThree();
   const pointsRef = useRef<THREE.Points>(null);
   const materialRef = useRef<THREE.ShaderMaterial>(null);
-
-  // Force a fixed [-1, 1] x [-1, 1] orthographic frustum regardless of how
-  // R3F auto-sizes the default camera on mount/resize, so the field's
-  // normalized coordinate space always exactly fills the canvas.
-  useEffect(() => {
-    const cam = camera as THREE.OrthographicCamera;
-    if (!cam.isOrthographicCamera) return;
-    cam.left = -1;
-    cam.right = 1;
-    cam.top = 1;
-    cam.bottom = -1;
-    cam.near = 0.1;
-    cam.far = 20;
-    cam.position.set(0, 0, 5);
-    cam.updateProjectionMatrix();
-  }, [camera, size]);
 
   const field = useMemo(() => buildField(config, 1337), [config]);
 
@@ -265,7 +250,7 @@ const DEFAULT_CONFIG: FieldConfig = {
   minParticles: 3,
   maxParticles: 8,
   particleSize: 1,
-  fieldOpacity: 0.28,
+  fieldOpacity: 0.45,
   dispersionRadius: 0.32,
   dispersionStrength: 0.14,
   returnSpeed: 0.05,
@@ -355,12 +340,11 @@ export default function ExperienceParticleField(props: Partial<FieldConfig>) {
     >
       {visible && (
         <Canvas
-          orthographic
           dpr={[1, device === "desktop" ? 1.5 : 1]}
           gl={{ antialias: false, alpha: true, powerPreference: "low-power" }}
-          camera={{ position: [0, 0, 5], near: 0.1, far: 20 }}
           style={{ pointerEvents: "none" }}
         >
+          <OrthographicCamera makeDefault position={[0, 0, 5]} left={-1} right={1} top={1} bottom={-1} near={0.1} far={20} />
           <ParticleScene config={config} mouseRef={mouseRef} activeRef={activeRef} reducedMotion={reducedMotion} />
         </Canvas>
       )}
