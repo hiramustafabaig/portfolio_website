@@ -26,6 +26,7 @@ const VERTEX_SHADER = /* glsl */ `
   uniform float uDispersionStrength;
   uniform float uReducedMotion;
   uniform float uPixelRatio;
+  uniform float uSizeScale;
 
   varying float vOpacity;
   varying float vColorMix;
@@ -35,9 +36,9 @@ const VERTEX_SHADER = /* glsl */ `
     vec3 pos = position;
 
     float drift = 1.0 - uReducedMotion;
-    pos.y += sin(uTime * 0.15 + aSeed * 6.2831) * 0.055 * drift;
-    pos.x += cos(uTime * 0.12 + aSeed * 6.2831) * 0.03 * drift;
-    pos.z += sin(uTime * 0.1 + aSeed * 3.14) * 0.04 * drift;
+    pos.y += sin(uTime * 0.15 + aSeed * 6.2831) * 0.02 * drift;
+    pos.x += cos(uTime * 0.12 + aSeed * 6.2831) * 0.012 * drift;
+    pos.z += sin(uTime * 0.1 + aSeed * 3.14) * 0.03 * drift;
 
     vec2 toParticle = pos.xy - uMouse;
     float dist = length(toParticle);
@@ -52,7 +53,7 @@ const VERTEX_SHADER = /* glsl */ `
     vGlow = falloff * uMouseActive;
 
     vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-    gl_PointSize = aSize * uPixelRatio * (280.0 / -mvPosition.z);
+    gl_PointSize = aSize * uPixelRatio * uSizeScale;
     gl_Position = projectionMatrix * mvPosition;
   }
 `;
@@ -97,6 +98,12 @@ type FieldConfig = {
   accentIntensity: number;
 };
 
+/**
+ * All positions live in a fixed logical [-1, 1] x [-1, 1] square — the camera
+ * below is an orthographic camera with that exact frustum, so this square
+ * always fills the canvas completely regardless of the section's real pixel
+ * aspect ratio. No particle can ever be clipped off-frame.
+ */
 function buildField({ strandCount, minParticles, maxParticles }: FieldConfig, seed: number) {
   const rng = mulberry32(seed);
   const positions: number[] = [];
@@ -106,19 +113,19 @@ function buildField({ strandCount, minParticles, maxParticles }: FieldConfig, se
   const colorMixes: number[] = [];
 
   for (let s = 0; s < strandCount; s++) {
-    const originX = (rng() - 0.5) * 0.7 + 0.9;
-    const originY = (rng() - 0.5) * 0.7 - 0.2;
-    const originZ = (rng() - 0.5) * 0.6;
+    const originX = 0.32 + (rng() - 0.5) * 0.3;
+    const originY = -0.05 + (rng() - 0.5) * 0.35;
+    const originZ = (rng() - 0.5) * 0.3;
 
     const theta = rng() * Math.PI * 2;
     const phi = Math.acos(rng() * 2 - 1);
     const dirX = Math.sin(phi) * Math.cos(theta);
     const dirY = Math.sin(phi) * Math.sin(theta);
-    const dirZ = Math.cos(phi) * 0.55;
+    const dirZ = Math.cos(phi) * 0.4;
 
-    const length = 1.4 + rng() * 3.4;
+    const length = 0.35 + rng() * 0.8;
     const particleCount = minParticles + Math.floor(rng() * (maxParticles - minParticles + 1));
-    const curveBend = (rng() - 0.5) * 0.7;
+    const curveBend = (rng() - 0.5) * 0.22;
     const strandOpacity = 0.12 + rng() * 0.5;
     const strandColorMix = rng();
     const hasGap = rng() < 0.25;
@@ -162,17 +169,31 @@ function ParticleScene({
   activeRef: React.MutableRefObject<number>;
   reducedMotion: boolean;
 }) {
-  const { camera, size } = useThree();
+  const { size, camera } = useThree();
   const pointsRef = useRef<THREE.Points>(null);
   const materialRef = useRef<THREE.ShaderMaterial>(null);
+
+  // Force a fixed [-1, 1] x [-1, 1] orthographic frustum regardless of how
+  // R3F auto-sizes the default camera on mount/resize, so the field's
+  // normalized coordinate space always exactly fills the canvas.
+  useEffect(() => {
+    const cam = camera as THREE.OrthographicCamera;
+    if (!cam.isOrthographicCamera) return;
+    cam.left = -1;
+    cam.right = 1;
+    cam.top = 1;
+    cam.bottom = -1;
+    cam.near = 0.1;
+    cam.far = 20;
+    cam.position.set(0, 0, 5);
+    cam.updateProjectionMatrix();
+  }, [camera, size]);
 
   const field = useMemo(() => buildField(config, 1337), [config]);
 
   const smoothedMouse = useRef(new THREE.Vector2(9999, 9999));
   const smoothedActive = useRef(0);
-  const ndcVec = useRef(new THREE.Vector3());
-  const camDir = useRef(new THREE.Vector3());
-  const worldPos = useRef(new THREE.Vector3());
+  const targetMouse = useRef(new THREE.Vector2(9999, 9999));
 
   const uniforms = useMemo(
     () => ({
@@ -183,6 +204,7 @@ function ParticleScene({
       uDispersionStrength: { value: config.dispersionStrength },
       uReducedMotion: { value: reducedMotion ? 1 : 0 },
       uPixelRatio: { value: typeof window !== "undefined" ? Math.min(window.devicePixelRatio, 2) : 1 },
+      uSizeScale: { value: 3 },
       uColorCream: { value: new THREE.Color("#e8d8c4") },
       uColorTaupe: { value: new THREE.Color("#a68a76") },
       uColorRust: { value: new THREE.Color("#9c2c3d") },
@@ -194,25 +216,27 @@ function ParticleScene({
 
   useFrame(({ clock }) => {
     const mat = materialRef.current;
+    const points = pointsRef.current;
     if (!mat) return;
 
-    mat.uniforms.uTime.value = clock.elapsedTime * config.animationSpeed;
+    const t = clock.elapsedTime * config.animationSpeed;
+    mat.uniforms.uTime.value = t;
+    mat.uniforms.uSizeScale.value = Math.max(1.6, Math.min(4.5, size.height / 220));
 
-    // Convert the raw pointer (screen-space NDC) to the field's world plane
-    // (z = 0), reusing the same three Vector3 instances every frame.
-    const raw = mouseRef.current;
-    if (raw.x > -2 && raw.x < 2) {
-      ndcVec.current.set(raw.x, raw.y, 0.5).unproject(camera);
-      camDir.current.copy(ndcVec.current).sub(camera.position).normalize();
-      const dist = camera.position.z !== 0 ? -camera.position.z / camDir.current.z : 0;
-      worldPos.current.copy(camera.position).add(camDir.current.multiplyScalar(dist));
-      smoothedMouse.current.lerp(new THREE.Vector2(worldPos.current.x, worldPos.current.y), 0.12);
-    }
-
+    // The orthographic frustum below is exactly [-1, 1] on both axes, which
+    // is identical to NDC space, so the raw pointer coordinates ARE already
+    // the correct world-space x/y — no unprojection/raycast needed.
+    targetMouse.current.set(mouseRef.current.x, mouseRef.current.y);
+    smoothedMouse.current.lerp(targetMouse.current, 0.12);
     smoothedActive.current += (activeRef.current - smoothedActive.current) * config.returnSpeed;
 
     mat.uniforms.uMouse.value.copy(smoothedMouse.current);
     mat.uniforms.uMouseActive.value = smoothedActive.current;
+
+    if (points && !reducedMotion) {
+      points.rotation.x = Math.sin(t * 0.05) * 0.025;
+      points.rotation.y = Math.cos(t * 0.04) * 0.03;
+    }
   });
 
   return (
@@ -241,9 +265,9 @@ const DEFAULT_CONFIG: FieldConfig = {
   minParticles: 3,
   maxParticles: 8,
   particleSize: 1,
-  fieldOpacity: 0.24,
-  dispersionRadius: 0.9,
-  dispersionStrength: 0.4,
+  fieldOpacity: 0.28,
+  dispersionRadius: 0.32,
+  dispersionStrength: 0.14,
   returnSpeed: 0.05,
   animationSpeed: 1,
   accentIntensity: 0.7,
@@ -331,9 +355,10 @@ export default function ExperienceParticleField(props: Partial<FieldConfig>) {
     >
       {visible && (
         <Canvas
+          orthographic
           dpr={[1, device === "desktop" ? 1.5 : 1]}
           gl={{ antialias: false, alpha: true, powerPreference: "low-power" }}
-          camera={{ position: [0, 0, 5], fov: 45 }}
+          camera={{ position: [0, 0, 5], near: 0.1, far: 20 }}
           style={{ pointerEvents: "none" }}
         >
           <ParticleScene config={config} mouseRef={mouseRef} activeRef={activeRef} reducedMotion={reducedMotion} />
