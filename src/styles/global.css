@@ -176,6 +176,26 @@
     transform: translateY(0) scale(1);
   }
 
+  /* Project cards: slide in from a side on scroll (kept as one self-contained
+     transform, deliberately not mixed with Tailwind's transform utilities,
+     so the reveal state and the hover lift below never fight over the same
+     `transform` declaration). */
+  .proj-card {
+    opacity: 0;
+    transform: translateX(90px) scale(0.94);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease;
+  }
+  .proj-card.reveal-from-left {
+    transform: translateX(-90px) scale(0.94);
+  }
+  .proj-card.is-visible {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  .proj-card.is-visible:hover {
+    transform: scale(1.015) translateY(-4px);
+  }
+
   /* Spotlight-border card: a soft cursor-tracked highlight plus a gradient
      border that only appears on hover — the "not-a-conventional-card" treatment. */
   .spot-card {

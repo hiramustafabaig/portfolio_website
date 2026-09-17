@@ -2,15 +2,21 @@
 import Layout from "../layouts/Layout.astro";
 import HeroCanvas from "../components/hero/HeroCanvas";
 import ExperienceBackdrop from "../components/experience/ExperienceBackdrop.astro";
-import ProjectStack from "../components/projects/ProjectStack";
 import { profile, coreValues } from "../data/profile";
 import { skillGroups } from "../data/skills";
 import { education, experience } from "../data/education";
 import { publications, researchInterests } from "../data/research";
 import { certifications, activities } from "../data/certifications";
+import { projects } from "../data/projects";
 
 const allSkills = skillGroups.flatMap((g) => g.items);
 const marqueeSkills = [...allSkills, ...allSkills];
+
+const projectStatusColor: Record<(typeof projects)[number]["status"], string> = {
+  Live: "text-mist border-mist/40 bg-mist/10",
+  "In Progress": "text-accent-soft border-accent/40 bg-accent/10",
+  Research: "text-accent-2 border-accent-2/40 bg-accent-2/10",
+};
 ---
 
 <Layout
@@ -316,7 +322,66 @@ const marqueeSkills = [...allSkills, ...allSkills];
         idea holds up once real users and messy data get involved.
       </p>
 
-      <ProjectStack client:visible />
+      <div class="mt-12 grid gap-8 md:grid-cols-2">
+        {projects.map((project, index) => (
+          <article
+            id={project.slug}
+            class:list={[
+              "proj-card spot-card glass group relative scroll-mt-28 overflow-hidden rounded-[2rem] border border-white/15 shadow-[0_20px_60px_-25px_rgba(0,0,0,0.5)] ring-1 ring-white/10",
+              index % 2 === 0 ? "reveal-from-left" : "",
+            ]}
+            style={`transition-delay:${index * 90}ms`}
+          >
+            <div
+              class="pointer-events-none absolute -top-16 h-40 w-40 rounded-full opacity-0 blur-3xl transition-opacity duration-700 group-hover:opacity-60"
+              style={
+                index % 2 === 0
+                  ? "right:-2.5rem; background: radial-gradient(circle, #9c2c3d55, transparent 70%);"
+                  : "left:-2.5rem; background: radial-gradient(circle, #9c2c3d55, transparent 70%);"
+              }
+            ></div>
+            <span class="pointer-events-none absolute inset-x-0 top-0 h-[3px] scale-x-0 bg-gradient-to-r from-transparent via-accent to-transparent opacity-0 transition-all duration-500 group-hover:scale-x-100 group-hover:opacity-100"></span>
+            {/* Permanent glossy highlight, like light catching curved glass */}
+            <div class="pointer-events-none absolute inset-x-0 top-0 h-1/2 rounded-t-[2rem] bg-gradient-to-b from-white/20 via-white/[0.04] to-transparent"></div>
+            {/* Diagonal shine that sweeps across on hover */}
+            <span class="pointer-events-none absolute -inset-y-full left-[-60%] w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 transition-all duration-700 ease-out group-hover:left-[130%] group-hover:opacity-100"></span>
+
+            {project.image && (
+              <div class="relative h-40 w-full overflow-hidden bg-surface-2/70 sm:h-48">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  width="640"
+                  height="360"
+                  loading="lazy"
+                  class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-surface/70 via-transparent to-transparent"></div>
+              </div>
+            )}
+
+            <div class="p-6 sm:p-8">
+              <div class="flex items-center justify-between gap-4">
+                <span class="font-mono text-xs text-text-dim/80">
+                  {String(index + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
+                </span>
+                <span class:list={["rounded-full border px-3 py-1 font-mono text-[11px] uppercase tracking-wide", projectStatusColor[project.status]]}>
+                  {project.status}
+                </span>
+              </div>
+              <h3 class="mt-3 font-display text-2xl font-semibold text-text sm:text-3xl">{project.title}</h3>
+              <p class="mt-3 text-sm leading-relaxed text-text-muted sm:text-base">{project.description}</p>
+              <div class="mt-5 flex flex-wrap items-center gap-2 border-t border-border/60 pt-4">
+                {project.tech.map((t) => (
+                  <span class="rounded-full border border-accent/30 bg-accent/10 px-3 py-1 font-mono text-xs uppercase tracking-wide text-accent">
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
     </div>
   </section>
 

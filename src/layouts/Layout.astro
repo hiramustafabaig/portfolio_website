@@ -36,7 +36,7 @@ const { title, description, path } = Astro.props;
         },
         { threshold: 0.15 }
       );
-      document.querySelectorAll(".reveal, .reveal-pop").forEach((el) => io.observe(el));
+      document.querySelectorAll(".reveal, .reveal-pop, .proj-card").forEach((el) => io.observe(el));
 
       // Cursor-tracked spotlight for `.spot-card` elements — cheap CSS custom
       // property updates, no per-card JS listeners needed.
