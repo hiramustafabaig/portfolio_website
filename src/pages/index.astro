@@ -249,16 +249,32 @@ const marqueeSkills = [...allSkills, ...allSkills];
                 {pub.slug ? (
                   <>
                     <p class="mt-2 font-mono text-xs uppercase tracking-wide" style="color:#8a7360;">{pub.venue.split(",")[0]} &middot; {pub.year}</p>
-                    <a
-                      href={`/research/${pub.slug}`}
-                      class="mt-auto inline-flex w-fit items-center gap-1.5 pt-4 text-sm font-semibold transition-all group-hover:gap-2.5"
-                      style="color:#9c2c3d;"
-                    >
-                      View full details
-                      <svg class="h-4 w-4 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                      </svg>
-                    </a>
+                    <div class="mt-auto flex flex-wrap items-center gap-x-5 gap-y-2 pt-4">
+                      <a
+                        href={`/research/${pub.slug}`}
+                        class="inline-flex w-fit items-center gap-1.5 text-sm font-semibold transition-all group-hover:gap-2.5"
+                        style="color:#9c2c3d;"
+                      >
+                        View full details
+                        <svg class="h-4 w-4 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </a>
+                      {pub.href && (
+                        <a
+                          href={pub.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="inline-flex w-fit items-center gap-1.5 text-xs font-semibold underline underline-offset-4 transition-colors"
+                          style="color:#9c2c3d;"
+                        >
+                          View on Google Scholar
+                          <svg class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                          </svg>
+                        </a>
+                      )}
+                    </div>
                   </>
                 ) : (
                   <>
