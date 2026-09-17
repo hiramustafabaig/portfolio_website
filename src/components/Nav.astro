@@ -10,7 +10,7 @@ const navItems = [
 ---
 
 <header class="fixed top-0 inset-x-0 z-50">
-  <nav class="glass mx-auto mt-4 flex max-w-5xl items-center justify-between rounded-2xl px-5 py-3 sm:px-6">
+  <nav class="mx-auto mt-4 flex max-w-5xl items-center justify-between rounded-2xl border border-white/10 bg-surface px-5 py-3 shadow-lg sm:px-6">
     <a href="#top" class="font-display text-lg font-semibold tracking-tight text-text">
       Hira<span class="text-accent">.</span>
     </a>
@@ -40,7 +40,7 @@ const navItems = [
     </button>
   </nav>
 
-  <div id="nav-mobile" class="glass mx-4 mt-2 hidden max-w-5xl rounded-2xl p-2 md:hidden">
+  <div id="nav-mobile" class="mx-4 mt-2 hidden max-w-5xl rounded-2xl border border-white/10 bg-surface p-2 shadow-xl md:hidden">
     <ul class="flex flex-col">
       {navItems.map((item) => (
         <li>
@@ -67,11 +67,23 @@ const navItems = [
     toggle.setAttribute("aria-expanded", String(!!isHidden));
   });
 
-  mobile?.querySelectorAll("a").forEach((a) =>
-    a.addEventListener("click", () => {
-      mobile.classList.add("hidden");
-      iconOpen?.classList.remove("hidden");
-      iconClose?.classList.add("hidden");
-    })
-  );
+  function closeMobileMenu() {
+    mobile?.classList.add("hidden");
+    iconOpen?.classList.remove("hidden");
+    iconClose?.classList.add("hidden");
+    toggle?.setAttribute("aria-expanded", "false");
+  }
+
+  mobile?.querySelectorAll("a").forEach((a) => a.addEventListener("click", closeMobileMenu));
+
+  document.addEventListener("click", (e) => {
+    if (mobile?.classList.contains("hidden")) return;
+    const target = e.target as Node;
+    if (mobile.contains(target) || toggle?.contains(target)) return;
+    closeMobileMenu();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeMobileMenu();
+  });
 </script>
