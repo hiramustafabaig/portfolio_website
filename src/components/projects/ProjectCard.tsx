@@ -51,7 +51,7 @@ export default function ProjectCard({
     <motion.article
       ref={cardRef}
       id={project.slug}
-      className="spot-card group relative scroll-mt-28 overflow-hidden rounded-[2rem] border border-border/70 bg-surface/70 shadow-[0_20px_60px_-25px_rgba(0,0,0,0.5)] transition-shadow duration-500 hover:shadow-[0_40px_85px_-20px_rgba(0,0,0,0.6)]"
+      className="spot-card glass group relative scroll-mt-28 overflow-hidden rounded-[2rem] border border-white/15 shadow-[0_20px_60px_-25px_rgba(0,0,0,0.5)] ring-1 ring-white/10 transition-shadow duration-500 hover:shadow-[0_40px_85px_-20px_rgba(0,0,0,0.6)]"
       style={{ rotateX: springX, rotateY: springY, transformPerspective: 900 }}
       initial={reducedMotion ? undefined : { opacity: 0, x: fromLeft ? -90 : 90, scale: 0.94 }}
       whileInView={reducedMotion ? undefined : { opacity: 1, x: 0, scale: 1 }}
@@ -72,6 +72,10 @@ export default function ProjectCard({
       <span
         className="pointer-events-none absolute inset-x-0 top-0 h-[3px] scale-x-0 bg-gradient-to-r from-transparent via-accent to-transparent opacity-0 transition-all duration-500 group-hover:scale-x-100 group-hover:opacity-100"
       />
+      {/* Permanent glossy highlight, like light catching curved glass */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-1/2 rounded-t-[2rem] bg-gradient-to-b from-white/20 via-white/[0.04] to-transparent" />
+      {/* Diagonal shine that sweeps across on hover */}
+      <span className="pointer-events-none absolute -inset-y-full left-[-60%] w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 transition-all duration-700 ease-out group-hover:left-[130%] group-hover:opacity-100" />
 
       {project.image && (
         <div className="relative h-40 w-full overflow-hidden bg-surface-2/70 sm:h-48">

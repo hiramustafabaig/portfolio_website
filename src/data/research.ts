@@ -1,6 +1,8 @@
 export type Publication = {
   authors: string;
   title: string;
+  shortTitle?: string;
+  slug?: string;
   venue: string;
   year: string;
   status: "Published" | "Under Review";
@@ -9,6 +11,8 @@ export type Publication = {
 
 export const publications: Publication[] = [
   {
+    slug: "federated-learning-framework",
+    shortTitle: "Privacy-preserving federated learning for secure, sustainable AI",
     authors: "Majeed, M. K., Dawood, O. B., Baig, H., Siddique, M. E., Zia, A., & Ahmad, E.",
     title:
       "Privacy-Preserving Federated Learning Framework Using Differential Privacy, Byzantine-Resilient Aggregation, and Carbon-Aware Distributed Training for Secure, Fair, and Sustainable Artificial Intelligence",

@@ -1,0 +1,64 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { publications } from "../../data/research";
+
+export function getStaticPaths() {
+  return publications
+    .filter((p) => p.slug)
+    .map((p) => ({ params: { slug: p.slug }, props: { pub: p } }));
+}
+
+const { pub } = Astro.props;
+---
+
+<Layout
+  title={pub.shortTitle ?? pub.title}
+  description={pub.title}
+  path={`/research/${pub.slug}`}
+>
+  <section class="relative min-h-screen bg-bg px-6 py-32 lg:px-12">
+    <div class="mx-auto max-w-3xl">
+      <a
+        href="/#research"
+        class="reveal inline-flex items-center gap-1.5 font-mono text-sm text-accent-soft transition-colors hover:text-accent"
+      >
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Back to Research
+      </a>
+
+      <div class="reveal-pop mt-8 overflow-hidden rounded-2xl border border-border bg-surface/50 p-8 sm:p-10">
+        <span
+          class:list={[
+            "inline-flex rounded-full px-3 py-1 text-xs font-semibold tracking-wide",
+            pub.status === "Published" ? "bg-mist text-void" : "bg-accent text-void",
+          ]}
+        >
+          {pub.status}
+        </span>
+
+        <h1 class="mt-5 font-display text-2xl font-semibold leading-snug text-text sm:text-3xl">
+          {pub.title}
+        </h1>
+
+        <p class="mt-5 text-sm leading-relaxed text-mist sm:text-base">{pub.authors}</p>
+        <p class="mt-2 font-mono text-xs uppercase tracking-wide text-mist/80">{pub.venue} &middot; {pub.year}</p>
+
+        {pub.href && (
+          <a
+            href={pub.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-6 inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/10 px-4 py-2 text-sm font-medium text-accent-soft transition-all hover:-translate-y-0.5 hover:border-accent/50 hover:text-accent"
+          >
+            View on Google Scholar
+            <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        )}
+      </div>
+    </div>
+  </section>
+</Layout>
